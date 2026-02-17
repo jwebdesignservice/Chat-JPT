@@ -1,0 +1,329 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "lastUpdated": "2026-02-16",
+    "description": "Data related to Jeffrey Epstein case documents, relationships, and timeline. Extracted from court documents, news reports, and the Epstein Document Network Explorer.",
+    "disclaimer": "The appearance of a name in these documents does not imply wrongdoing. Many individuals are mentioned only in passing or in non-salacious contexts. Only Jeffrey Epstein and Ghislaine Maxwell have been charged in connection with these crimes.",
+    "sources": [
+      "Court documents (Virginia Giuffre v. Ghislaine Maxwell)",
+      "House Oversight Committee released emails",
+      "UN Palmer Commission report",
+      "News archives (CNN, NPR, Miami Herald)",
+      "DOJ Epstein Files Transparency Act releases"
+    ]
+  },
+  "caseOverview": {
+    "defendant": "Jeffrey Edward Epstein",
+    "born": "January 20, 1953",
+    "died": "August 10, 2019",
+    "causeOfDeath": "Suicide (official ruling) at Metropolitan Correctional Center, New York",
+    "occupation": "Financier",
+    "charges": "Sex trafficking of minors, conspiracy to engage in sex trafficking",
+    "keyAccomplice": {
+      "name": "Ghislaine Maxwell",
+      "relationship": "Former girlfriend, later associate",
+      "conviction": "Convicted December 29, 2021 on five of six counts including sex trafficking",
+      "sentence": "20 years federal prison (June 28, 2022)"
+    },
+    "keyLocations": [
+      "Manhattan townhouse (9 East 71st Street)",
+      "Palm Beach estate (358 El Brillo Way)",
+      "Zorro Ranch (New Mexico)",
+      "Little St. James Island (US Virgin Islands)",
+      "Paris apartment"
+    ]
+  },
+  "documentReleases": {
+    "january2024Unsealing": {
+      "date": "January 3-4, 2024",
+      "description": "Federal judge began unsealing court records from Virginia Giuffre v. Ghislaine Maxwell lawsuit",
+      "scope": "More than 40 documents released initially, 19 additional on January 4",
+      "totalPages": "Approximately 1,270 pages of depositions and other records",
+      "individualsNamed": "Approximately 153 people mentioned",
+      "context": "Releases came after years of efforts by Epstein's victims and journalist Julie K. Brown of the Miami Herald"
+    },
+    "epsteinFilesTransparencyAct": {
+      "date": "2026",
+      "description": "Department of Justice published 3.5 million responsive pages in compliance with the Epstein Files Transparency Act",
+      "scope": "Comprehensive release of federal documents related to Epstein investigations"
+    }
+  },
+  "prominentNamesInDocuments": {
+    "disclaimer": "Appearance in documents does not indicate criminal involvement. Many are mentioned in passing or as victims' accounts. All named have denied wrongdoing unless convicted.",
+    "categories": {
+      "politicalFigures": [
+        {
+          "name": "Bill Clinton",
+          "context": "Former US President. Flight logs showed multiple flights on Epstein's aircraft. Clinton denied visiting Epstein's island or knowing about crimes.",
+          "evidenceType": "testimony"
+        },
+        {
+          "name": "Donald Trump",
+          "context": "Former US President. Known social acquaintance of Epstein in Palm Beach. Cut ties with Epstein reportedly in 2004.",
+          "evidenceType": "testimony"
+        }
+      ],
+      "royalty": [
+        {
+          "name": "Prince Andrew",
+          "fullTitle": "Prince Andrew, Duke of York",
+          "context": "British royal. Named in Giuffre lawsuit. Settled civil case in February 2022 for undisclosed sum. Denied all allegations.",
+          "evidenceType": "allegation"
+        }
+      ],
+      "scientists": [
+        {
+          "name": "Stephen Hawking",
+          "context": "Mentioned in documents but no allegations of wrongdoing. Attended scientific conference organized by Epstein.",
+          "evidenceType": "testimony"
+        }
+      ],
+      "entertainment": [
+        {
+          "name": "David Copperfield",
+          "context": "Magician. Mentioned in deposition testimony. No allegations of illegal conduct. Denied any wrongdoing.",
+          "evidenceType": "testimony"
+        }
+      ]
+    }
+  },
+  "timeline": [
+    {
+      "date": "1953-01-20",
+      "event": "Jeffrey Epstein born in Brooklyn, New York",
+      "category": "biography"
+    },
+    {
+      "date": "1973",
+      "event": "Epstein begins teaching at Dalton School without a college degree",
+      "category": "career"
+    },
+    {
+      "date": "1976",
+      "event": "Epstein hired at Bear Stearns investment bank",
+      "category": "career"
+    },
+    {
+      "date": "1981",
+      "event": "Epstein leaves Bear Stearns, establishes own firm",
+      "category": "career"
+    },
+    {
+      "date": "1988",
+      "event": "Meets Ghislaine Maxwell",
+      "category": "relationship"
+    },
+    {
+      "date": "2005",
+      "event": "Palm Beach police begin investigation after parent reports abuse",
+      "category": "legal"
+    },
+    {
+      "date": "2006",
+      "event": "FBI launches investigation",
+      "category": "legal"
+    },
+    {
+      "date": "2007",
+      "event": "US Attorney's office prepared 53-page indictment",
+      "category": "legal"
+    },
+    {
+      "date": "2008-06-30",
+      "event": "Epstein pleads guilty to Florida state charges of procuring a minor for prostitution",
+      "category": "legal",
+      "details": "Non-prosecution agreement negotiated by attorneys including Alexander Acosta"
+    },
+    {
+      "date": "2008-07-01",
+      "event": "Epstein begins 18-month sentence with work release privileges",
+      "category": "legal"
+    },
+    {
+      "date": "2009",
+      "event": "Epstein released from custody, registers as sex offender",
+      "category": "legal"
+    },
+    {
+      "date": "2015-01",
+      "event": "Virginia Giuffre files lawsuit against Ghislaine Maxwell",
+      "category": "legal"
+    },
+    {
+      "date": "2018-11-28",
+      "event": "Miami Herald publishes 'Perversion of Justice' series by Julie K. Brown",
+      "category": "media",
+      "significance": "Investigation that renewed scrutiny of 2008 plea deal"
+    },
+    {
+      "date": "2019-07-06",
+      "event": "Epstein arrested at Teterboro Airport returning from Paris",
+      "category": "legal"
+    },
+    {
+      "date": "2019-07-08",
+      "event": "Federal indictment unsealed: sex trafficking charges in New York",
+      "category": "legal"
+    },
+    {
+      "date": "2019-07-18",
+      "event": "Bail denied; Epstein ordered held at Metropolitan Correctional Center",
+      "category": "legal"
+    },
+    {
+      "date": "2019-07-23",
+      "event": "Epstein found injured in his cell (apparent suicide attempt or assault)",
+      "category": "incident"
+    },
+    {
+      "date": "2019-08-10",
+      "event": "Jeffrey Epstein found dead in his cell",
+      "category": "death",
+      "officialRuling": "Suicide by hanging",
+      "controversies": [
+        "Removed from suicide watch despite prior incident",
+        "Guards failed to check on him as required",
+        "Cellmate transferred day before death",
+        "Surveillance cameras malfunctioned"
+      ]
+    },
+    {
+      "date": "2020-07-02",
+      "event": "Ghislaine Maxwell arrested in New Hampshire",
+      "category": "legal"
+    },
+    {
+      "date": "2021-12-29",
+      "event": "Ghislaine Maxwell convicted on five of six counts",
+      "category": "legal"
+    },
+    {
+      "date": "2022-02",
+      "event": "Prince Andrew settles civil lawsuit with Virginia Giuffre",
+      "category": "legal"
+    },
+    {
+      "date": "2022-06-28",
+      "event": "Ghislaine Maxwell sentenced to 20 years in federal prison",
+      "category": "legal"
+    },
+    {
+      "date": "2024-01-03",
+      "event": "First batch of Epstein documents unsealed by federal judge",
+      "category": "legal",
+      "details": "Approximately 153 people named in released documents"
+    },
+    {
+      "date": "2024-01-04",
+      "event": "Additional 19 documents released",
+      "category": "legal"
+    }
+  ],
+  "keyLocations": {
+    "littleStJames": {
+      "name": "Little St. James Island",
+      "aliases": ["Pedophile Island (colloquial)", "Epstein Island"],
+      "location": "US Virgin Islands",
+      "size": "71.5 acres",
+      "acquired": "1998",
+      "purchasePrice": "$7.95 million",
+      "features": ["Main residence", "Guest houses", "Staff quarters", "Helipad", "Dock", "Temple-like structure"],
+      "status": "Sold after Epstein's death"
+    },
+    "manhattanTownhouse": {
+      "name": "Manhattan Townhouse",
+      "address": "9 East 71st Street, New York, NY",
+      "size": "21,000 square feet",
+      "acquired": "1989 (from Les Wexner)",
+      "features": ["One of largest private residences in Manhattan", "Seven stories"],
+      "value": "Estimated $56 million at time of death"
+    },
+    "palmBeachEstate": {
+      "name": "Palm Beach Estate",
+      "address": "358 El Brillo Way, Palm Beach, FL",
+      "details": "Site where many alleged crimes occurred according to victims",
+      "status": "Demolished by new owner in 2021"
+    },
+    "zorroRanch": {
+      "name": "Zorro Ranch",
+      "location": "Stanley, New Mexico",
+      "size": "7,500+ acres",
+      "details": "Remote property in New Mexico desert"
+    }
+  },
+  "keyLegalCases": {
+    "floridaPleaDeal2008": {
+      "name": "2008 Florida Plea Deal",
+      "prosecutor": "Alexander Acosta (US Attorney)",
+      "outcome": "Non-prosecution agreement; Epstein pleaded to state charges",
+      "sentence": "18 months; served 13 with work release",
+      "controversies": [
+        "Victims not consulted as required by law",
+        "Deal kept secret from victims",
+        "Protected co-conspirators from federal prosecution",
+        "Work release allowed Epstein to leave jail 12 hours per day"
+      ],
+      "aftermath": "Deal later found to violate Crime Victims' Rights Act"
+    },
+    "sdnyIndictment2019": {
+      "name": "2019 SDNY Indictment",
+      "court": "Southern District of New York",
+      "charges": [
+        "Sex trafficking of minors",
+        "Conspiracy to engage in sex trafficking of minors"
+      ],
+      "status": "Dismissed after Epstein's death"
+    },
+    "giuffreVMaxwell": {
+      "name": "Virginia Giuffre v. Ghislaine Maxwell",
+      "type": "Civil defamation lawsuit",
+      "filed": "2015",
+      "settled": "2017",
+      "significance": "Source of most unsealed documents in 2024 releases"
+    }
+  },
+  "victims": {
+    "note": "Many victims have come forward publicly or through legal proceedings. Their testimony forms the core evidence in cases against Epstein and Maxwell.",
+    "knownPublicVictims": [
+      {
+        "name": "Virginia Giuffre",
+        "aliasInDocuments": "Jane Doe 3",
+        "description": "Key accuser who filed multiple lawsuits and whose case led to document releases",
+        "allegations": "Recruited at age 16 while working at Mar-a-Lago; trafficked to multiple locations"
+      },
+      {
+        "name": "Courtney Wild",
+        "description": "Victim who challenged 2008 plea deal",
+        "allegations": "Recruited at age 14 in Palm Beach"
+      }
+    ],
+    "totalIdentified": "Authorities identified over 30 victims in initial investigations; civil claims suggest hundreds"
+  },
+  "networkConnections": {
+    "description": "Epstein maintained connections to powerful individuals across politics, business, science, and entertainment. The nature and extent of these relationships varies significantly.",
+    "categories": {
+      "business": ["Les Wexner (L Brands)", "Leon Black (Apollo Global)", "Mort Zuckerman", "Thomas Pritzker"],
+      "academic": ["MIT Media Lab (Joi Ito)", "Harvard University donations"],
+      "science": ["Edge Foundation events", "Scientific conferences"],
+      "legal": ["Alan Dershowitz (attorney)", "Kenneth Starr (attorney)"]
+    }
+  },
+  "documentTypes": {
+    "flightLogs": {
+      "description": "Records of passengers on Epstein's private aircraft, including the Boeing 727 nicknamed 'Lolita Express'",
+      "significance": "Used to establish connections and travel patterns"
+    },
+    "depositions": {
+      "description": "Sworn testimony from various civil lawsuits",
+      "key": "Giuffre v. Maxwell depositions"
+    },
+    "emails": {
+      "description": "Electronic communications released through various legal processes",
+      "source": "House Oversight Committee releases"
+    },
+    "phoneRecords": {
+      "description": "Contact information and call records",
+      "key": "'Black book' of contacts"
+    }
+  }
+}

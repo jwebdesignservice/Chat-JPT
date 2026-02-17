@@ -1,0 +1,875 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "lastUpdated": "2026-02-16",
+    "description": "Historical timeline data for Israel-Palestine relations, Middle East conflicts, and related events (1990-2012)",
+    "sources": [
+      "Oslo Accords documentation",
+      "UN reports and resolutions",
+      "US State Department records",
+      "Israeli government publications",
+      "Academic research sources",
+      "News archives"
+    ]
+  },
+  "events": [
+    {
+      "id": "1990-001",
+      "date": "1990-01-01",
+      "dateDisplay": "1990",
+      "location": null,
+      "actor": "Saddam Hussein",
+      "action": "threatened",
+      "target": "Israel",
+      "category": "threat",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Iraqi President Saddam Hussein made public threats against Israel as tensions escalated in the Middle East.",
+        "context": "These threats preceded the Gulf War and were part of Hussein's broader strategy to rally Arab support against the US-led coalition by positioning Iraq as a champion against Israel.",
+        "significance": "The threats set the stage for Iraq's later Scud missile attacks on Israel during the Gulf War."
+      }
+    },
+    {
+      "id": "1990-002",
+      "date": "1990-01-01",
+      "dateDisplay": "1990",
+      "location": "Oslo",
+      "actor": "Uri Savir",
+      "action": "led negotiations for",
+      "target": "Israel",
+      "category": "diplomacy",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Uri Savir, Israel's Director-General of the Foreign Ministry, led Israeli negotiating teams in secret Oslo talks.",
+        "context": "Foreign Minister Shimon Peres asked Savir to participate in secret talks in Oslo in May 1993. These negotiations had begun informally in January 1993 when two Israeli academics (Yair Hirschfeld and Ron Pundak) started discussions with three senior PLO officials—Ahmed Qurei (Abu Ala), Hassan Asfour, and Maher al-Kurd—facilitated by Norwegian diplomat Terje Larsen.",
+        "significance": "Savir's involvement marked the transition from informal academic back-channel talks to official Israeli government engagement, ultimately leading to the Oslo Accords."
+      },
+      "relatedPeople": ["Shimon Peres", "Yair Hirschfeld", "Ron Pundak", "Ahmed Qurei", "Terje Larsen"],
+      "relatedEvents": ["1993-09-13"]
+    },
+    {
+      "id": "1990-003",
+      "date": "1990-01-01",
+      "dateDisplay": "1990",
+      "location": null,
+      "actor": "Yasser Arafat",
+      "action": "authorized representatives to negotiate with",
+      "target": "Israel",
+      "category": "diplomacy",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "PLO Chairman Yasser Arafat authorized Palestinian representatives to engage in secret negotiations with Israel.",
+        "context": "Arafat showed surprising flexibility through Oslo channels compared to the stalled formal Washington talks that had been ongoing since the 1991 Madrid Peace Conference. Abu Ala emphasized pragmatic progression from easier to more difficult issues to build trust.",
+        "significance": "This authorization was crucial for legitimizing the secret Oslo process and eventually led to mutual recognition between Israel and the PLO."
+      },
+      "relatedPeople": ["Ahmed Qurei (Abu Ala)", "Hassan Asfour", "Maher al-Kurd"],
+      "relatedEvents": ["1993-09-13"]
+    },
+    {
+      "id": "1991-001",
+      "date": "1991-01-18T02:00:00",
+      "dateDisplay": "January 18, 1991, 2:00 AM",
+      "location": "Israel (Tel Aviv, Haifa)",
+      "actor": "Saddam Hussein",
+      "action": "ordered Scud missile attacks against",
+      "target": "Israel",
+      "category": "military",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Iraq launched modified Scud missile attacks against Israeli civilian centers during the Gulf War.",
+        "context": "The initial attack occurred on January 17, 1991, shortly after Operation Desert Storm began, with subsequent waves hitting Tel Aviv on January 18. Iraq launched over 40 Scud missiles toward Israel between January 17 and February 23, 1991.",
+        "strategicObjective": "Saddam Hussein's primary goal was to provoke Israeli retaliation, which would fracture the U.S.-led coalition against Iraq by forcing Arab states to choose between supporting Israel or Iraq.",
+        "missilesUsed": "Iraq deployed the al-Husayn, a modified Soviet Scud missile with extended range (372 miles vs 186 miles for original) but reduced warhead size (227 pounds vs 455 pounds) and accuracy.",
+        "casualties": "2 civilians killed directly; 11-74 additional deaths from indirect causes including improper use of gas masks and atropine injections.",
+        "outcome": "Iraq failed to provoke Israeli retaliation, preserving the coalition's unity. Israel showed remarkable restraint under US pressure."
+      },
+      "relatedEvents": ["Gulf War", "Operation Desert Storm"]
+    },
+    {
+      "id": "1993-001",
+      "date": "1993-09-13",
+      "dateDisplay": "September 13, 1993",
+      "location": "Washington, D.C.",
+      "actor": "Israel",
+      "action": "exchanged letters of recognition with",
+      "target": "Palestine Liberation Organization",
+      "category": "diplomacy",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Israel and the PLO formally exchanged letters of mutual recognition, a historic breakthrough in Israeli-Palestinian relations.",
+        "context": "The exchange occurred alongside the signing of the Oslo I Accord (Declaration of Principles on Interim Self-Government Arrangements). The PLO recognized Israel's right to exist, and Israel recognized the PLO as the representative of the Palestinian people.",
+        "keyProvisions": [
+          "PLO renounced terrorism and violence",
+          "PLO recognized Israel's right to exist in peace and security",
+          "Israel recognized the PLO as the representative of the Palestinian people",
+          "Both parties committed to peaceful resolution of the conflict"
+        ],
+        "witnesses": ["US President Bill Clinton", "Russian representatives"],
+        "significance": "This was the first direct, face-to-face agreement between Israel and the PLO, marking a fundamental shift in the conflict."
+      },
+      "relatedPeople": ["Yitzhak Rabin", "Yasser Arafat", "Bill Clinton", "Shimon Peres"],
+      "relatedDocuments": ["Oslo I Accord", "Declaration of Principles"]
+    },
+    {
+      "id": "1993-002",
+      "date": "1993-09-13",
+      "dateDisplay": "September 13, 1993",
+      "location": "Washington, D.C.",
+      "actor": "Yasir Arafat",
+      "action": "exchanged letters of recognition with",
+      "target": "Israel",
+      "category": "diplomacy",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "PLO Chairman Yasser Arafat signed letters of mutual recognition with Israeli Prime Minister Yitzhak Rabin.",
+        "context": "The famous handshake between Rabin and Arafat on the White House lawn symbolized a new era. The agreements created the Palestinian Authority to provide limited self-governance over parts of the West Bank and Gaza.",
+        "opposition": "Many Palestinians and militant groups rejected the accords, with academic Edward Said calling them a 'Palestinian Versailles.' Far-right Israelis also opposed the agreement.",
+        "tragedy": "Prime Minister Yitzhak Rabin was assassinated in 1995 by a right-wing Israeli extremist for signing the Oslo Accords."
+      },
+      "relatedPeople": ["Yitzhak Rabin", "Bill Clinton", "Shimon Peres"],
+      "relatedDocuments": ["Oslo I Accord"]
+    },
+    {
+      "id": "1995-001",
+      "date": "1995-09-28",
+      "dateDisplay": "September 28, 1995",
+      "location": "Washington, D.C. (signed in Cairo negotiations)",
+      "actor": "Israel",
+      "action": "signed",
+      "target": "Israeli-Palestinian Interim Agreement (Oslo II)",
+      "category": "diplomacy",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Israel and the PLO signed the Israeli-Palestinian Interim Agreement, commonly known as Oslo II or the Taba Agreement.",
+        "signatories": "Israeli Prime Minister Yitzhak Rabin and PLO Chairman Yasser Arafat, with US President Bill Clinton and representatives from Russia, Egypt, Jordan, Norway, and the European Union as witnesses.",
+        "keyProvisions": [
+          "Established Palestinian Interim Self-Government Authority in West Bank and Gaza",
+          "Created Areas A, B, and C in the West Bank with varying degrees of Palestinian and Israeli control",
+          "Granted Palestinian Authority limited powers in Areas A and B",
+          "Set transitional period not exceeding five years",
+          "Permanent status negotiations to begin by May 4, 1996"
+        ],
+        "scope": "The agreement comprised over 300 pages with 5 chapters, 31 articles, 7 annexes, and 9 maps.",
+        "outcome": "While an interim agreement, Oslo II did not lead to a final peace settlement."
+      },
+      "relatedPeople": ["Yitzhak Rabin", "Yasser Arafat", "Bill Clinton"],
+      "relatedDocuments": ["Oslo I Accord", "Gaza-Jericho Agreement", "Cairo Agreement"]
+    },
+    {
+      "id": "1996-001",
+      "date": "1996-07-25",
+      "dateDisplay": "July 25, 1996",
+      "location": "Southern Lebanon",
+      "actor": "Israel",
+      "action": "began air strikes against",
+      "target": "Hezbollah positions",
+      "category": "military",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Israel launched Operation Grapes of Wrath, a military campaign against Hezbollah in southern Lebanon.",
+        "context": "The operation was triggered by escalating Hezbollah attacks that had penetrated Israeli-controlled areas and inflicted casualties on Israeli forces in February and March 1996.",
+        "duration": "April 11-27, 1996",
+        "methods": "Israel employed advanced technology including pilotless drones with video cameras, computerized fire-finding systems, helicopter gunships, F-16 aircraft, and naval gunships.",
+        "ceasefire": "A ceasefire understanding was reached on April 26, 1996, through US diplomatic mediation, establishing that armed groups would not launch rockets into Israel and Israel would not fire on civilian targets in Lebanon.",
+        "monitoringGroup": "A Monitoring Committee was established with representatives from the US, France, Syria, Israel, and Lebanon."
+      },
+      "relatedEvents": ["Operation Grapes of Wrath", "1996 Israeli-Lebanese Ceasefire Understanding"]
+    },
+    {
+      "id": "1996-002",
+      "date": "1996-07-25",
+      "dateDisplay": "July 25, 1996",
+      "location": "Southern Lebanon",
+      "actor": "Israel",
+      "action": "expanded bombing to",
+      "target": "wider areas of southern Lebanon",
+      "category": "military",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Israeli military operations expanded to target wider areas of southern Lebanon as Operation Grapes of Wrath intensified.",
+        "context": "The expanded operations resulted in significant destruction of Lebanese infrastructure and displacement of civilian populations."
+      }
+    },
+    {
+      "id": "1998-001",
+      "date": "1998-01-01",
+      "dateDisplay": "1998",
+      "location": "West Bank, Gaza Strip",
+      "actor": "Israel",
+      "action": "proposed redeployment of",
+      "target": "West Bank and Gaza territories",
+      "category": "diplomacy",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Israel proposed territorial redeployments in the West Bank and Gaza as part of ongoing peace process negotiations.",
+        "context": "This was part of the implementation of Oslo Accord commitments regarding phased Israeli withdrawals from Palestinian territories."
+      },
+      "relatedDocuments": ["Wye River Memorandum"]
+    },
+    {
+      "id": "1999-001",
+      "date": "1999-01-01",
+      "dateDisplay": "1999",
+      "location": "West Bank, Gaza Strip",
+      "actor": "Israel",
+      "action": "proposed phased redeployment through",
+      "target": "Sharm el-Sheikh Memorandum",
+      "category": "diplomacy",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Israel agreed to phased territorial redeployments under the Sharm el-Sheikh Memorandum signed September 4, 1999.",
+        "signatories": "Israeli Prime Minister Ehud Barak and PLO Chairman Yasser Arafat, with US, Egypt, and Jordan as witnesses.",
+        "keyProvisions": [
+          "Framework Agreement on permanent status issues within five months",
+          "Comprehensive agreement within one year",
+          "Three phases of Israeli land transfers to Palestinian control",
+          "September 5, 1999: 7% from Area C to Area B",
+          "November 15, 1999: 2% from Area B to Area A, 3% from Area C to Area B",
+          "January 20, 2000: 1% from Area C to Area A, 5.1% from Area B to Area A",
+          "Release of Palestinian prisoners in two stages"
+        ],
+        "additionalIssues": "Safe Passage between Gaza and West Bank, Gaza Sea Port construction, Hebron issues, security matters."
+      },
+      "relatedPeople": ["Ehud Barak", "Yasser Arafat"],
+      "relatedDocuments": ["Wye River Memorandum", "Oslo Accords"]
+    },
+    {
+      "id": "1999-002",
+      "date": "1999-05-17",
+      "dateDisplay": "May 17, 1999",
+      "location": "Israel",
+      "actor": "Ehud Barak",
+      "action": "elected as Prime Minister of Israel",
+      "target": "Israel",
+      "category": "politics",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Ehud Barak was elected Prime Minister of Israel, defeating incumbent Benjamin Netanyahu with 56% of the vote.",
+        "context": "This was only the second direct prime ministerial election in Israeli history. Barak led the Labor Party rebranded as 'One Israel' in coalition with David Levy and other factions.",
+        "campaignPlatform": [
+          "Reinvigorating the peace process with Palestinians",
+          "Withdrawal from Lebanon by July 2000",
+          "Challenging ultra-Orthodox military service exemptions"
+        ],
+        "whyNetanyahuLost": "Netanyahu's coalition collapsed after the Wye River Memorandum alienated right-wing supporters while disappointing the left. His Finance Minister resigned, Defense Minister was dismissed, and his campaign messaging failed to resonate.",
+        "background": "Barak was a former Chief of Staff and the most decorated soldier in Israeli military history. He positioned himself as Yitzhak Rabin's natural successor.",
+        "tookOffice": "July 1999"
+      },
+      "relatedPeople": ["Benjamin Netanyahu", "Yitzhak Rabin", "David Levy"]
+    },
+    {
+      "id": "2000-001",
+      "date": "2000-07-01",
+      "dateDisplay": "July 2000",
+      "location": "Camp David, Maryland, USA",
+      "actor": "Israel",
+      "action": "presented territorial proposal at",
+      "target": "Camp David Talks",
+      "category": "diplomacy",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Israel presented ambitious territorial proposals at the Camp David Summit, held July 11-25, 2000.",
+        "participants": "US President Bill Clinton, Israeli Prime Minister Ehud Barak, Palestinian Authority Chairman Yasser Arafat.",
+        "israeliOffer": [
+          "Withdrawal from up to 95% of the West Bank",
+          "100% withdrawal from Gaza",
+          "Dismantling of isolated settlements",
+          "Palestinian control over parts of Jerusalem",
+          "Religious sovereignty over the Temple Mount"
+        ],
+        "keyDisagreement": "Fundamental disagreement over sovereignty of the Temple Mount (Haram al-Sharif), with Barak insisting on Israeli control and Arafat demanding Palestinian sovereignty.",
+        "outcome": "The summit ended without agreement on July 25, 2000. Clinton acknowledged Barak's 'particular courage and vision' and blamed Arafat for the failure.",
+        "aftermath": "The failure is considered a main trigger of the Second Intifada."
+      },
+      "relatedPeople": ["Ehud Barak", "Yasser Arafat", "Bill Clinton"],
+      "relatedEvents": ["Second Intifada", "Taba Summit 2001"]
+    },
+    {
+      "id": "2001-001",
+      "date": "2001-01-01",
+      "dateDisplay": "January 2001",
+      "location": "Taba, Egypt",
+      "actor": "Israel",
+      "action": "presented territorial proposal at",
+      "target": "Taba Talks",
+      "category": "diplomacy",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Israel and Palestinians presented detailed territorial maps for the first time at the Taba Summit, January 21-27, 2001.",
+        "context": "The negotiations occurred three months after the outbreak of the al-Aqsa intifada and just weeks before Israeli elections brought Ariel Sharon to power.",
+        "israeliProposal": "Annexing approximately 6% of the West Bank, incorporating roughly 80% of settlers.",
+        "palestinianProposal": "3.1% annexation with land swap.",
+        "agreements": [
+          "Both sides accepted the principle of land swaps",
+          "Both agreed June 4, 1967 lines would serve as basis for borders",
+          "UN Security Council Resolution 242 acknowledged as framework"
+        ],
+        "disagreements": [
+          "Proportionality of land swaps",
+          "Whether settlements should be allowed to expand"
+        ],
+        "outcome": "No final agreement reached, but EU's 'Moratinos Report' documented substantial progress and suggested solutions were possible."
+      },
+      "relatedPeople": ["Ehud Barak", "Yasser Arafat"],
+      "relatedDocuments": ["Moratinos Report"]
+    },
+    {
+      "id": "2005-001",
+      "date": "2005-01-01",
+      "dateDisplay": "2005",
+      "location": "Gaza Strip",
+      "actor": "Israel",
+      "action": "implemented unilateral withdrawal through",
+      "target": "Gaza Disengagement Plan",
+      "category": "military",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Israel withdrew from the Gaza Strip, dismantling all 21 Israeli settlements.",
+        "proposedBy": "Prime Minister Ariel Sharon in 2003",
+        "adopted": "Cabinet adopted in 2004, Knesset approved as Disengagement Plan Implementation Law in June 2004",
+        "execution": "Withdrawal occurred August 15 - September 12, 2005",
+        "scope": [
+          "Evacuated approximately 8,500 settlers",
+          "Demolished all Israeli residential buildings",
+          "55,000 Israeli troops deployed to ensure compliance",
+          "Four West Bank settlements also dismantled"
+        ],
+        "settlerResponse": "Roughly half voluntarily accepted government compensation ($150,000-$400,000 per family); remainder resisted forcibly.",
+        "motivations": [
+          "Unsustainable cost of defending settlements amid fighting with Hamas",
+          "Demographic concerns about Israeli vs Palestinian birth rates",
+          "Security officials argued Israel could no longer afford massive security required"
+        ],
+        "publicSupport": "50-60% of Israelis supported; 30-40% opposed."
+      },
+      "relatedPeople": ["Ariel Sharon"]
+    },
+    {
+      "id": "2005-002",
+      "date": "2005-08-17",
+      "dateDisplay": "August 17, 2005",
+      "location": "Gaza Strip",
+      "actor": "Israel",
+      "action": "unilaterally withdrew from",
+      "target": "Gaza Strip",
+      "category": "military",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Israel began the physical evacuation of settlers from the Gaza Strip.",
+        "context": "The withdrawal was part of the Gaza Disengagement Plan implemented under Prime Minister Ariel Sharon."
+      }
+    },
+    {
+      "id": "2005-003",
+      "date": "2005-08-22",
+      "dateDisplay": "August 22, 2005",
+      "location": "Gaza Strip",
+      "actor": "Israel",
+      "action": "completed withdrawal from",
+      "target": "Gaza Strip",
+      "category": "military",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Israel completed the evacuation of all settlers from Gaza Strip settlements.",
+        "finalWithdrawal": "By September 12, 2005, the last Israeli troops departed, officially ending nearly four decades of Israeli military presence in Gaza.",
+        "hamasResponse": "Hamas claimed the withdrawal as vindication of its violent resistance campaign."
+      }
+    },
+    {
+      "id": "2006-001",
+      "date": "2006-07-12",
+      "dateDisplay": "2006",
+      "location": "Lebanon",
+      "actor": "Hezbollah",
+      "action": "achieved draw against",
+      "target": "Israel",
+      "category": "military",
+      "evidenceType": "allegation",
+      "details": {
+        "summary": "The 2006 Lebanon War (Second Lebanon War) between Israel and Hezbollah ended with disputed outcomes, with Hezbollah claiming a 'divine victory.'",
+        "duration": "July 12 - August 14, 2006",
+        "trigger": "Hezbollah cross-border raid on July 12, killing eight Israeli soldiers and kidnapping two (Ehud Goldwasser and Eldad Regev).",
+        "israeliOperations": "Massive air campaigns targeting Hezbollah headquarters, rocket stockpiles, and strategic infrastructure in Beirut and southern Lebanon.",
+        "hezbollahResponse": "Unprecedented barrage of Katyusha rockets—more than 100 per day, totaling nearly 4,000 rockets—targeting Israeli civilian centers including Haifa, Kiryat Shemona, and Safed.",
+        "casualties": {
+          "israeli": "157 killed; damage exceeding $1.5 billion; nearly 400,000 displaced",
+          "lebanese": "Estimated 1,000 killed; approximately 800,000 temporarily displaced"
+        },
+        "resolution": "UN Security Council Resolution 1701, passed August 11, 2006, calling for immediate ceasefire and Israeli withdrawal."
+      },
+      "relatedDocuments": ["UN Security Council Resolution 1701"]
+    },
+    {
+      "id": "2006-002",
+      "date": "2006-07-12",
+      "dateDisplay": "2006",
+      "location": null,
+      "actor": "Syria",
+      "action": "demonstrated support for resistance to",
+      "target": "Israel",
+      "category": "politics",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Syria provided support to Hezbollah during the 2006 Lebanon War, demonstrating opposition to Israel.",
+        "context": "Syria served as a key conduit for Iranian weapons and support to Hezbollah."
+      }
+    },
+    {
+      "id": "2007-001",
+      "date": "2007-09-01",
+      "dateDisplay": "September 6, 2007",
+      "location": "Syria (Deir al-Zor region)",
+      "actor": "Israel",
+      "action": "bombed",
+      "target": "Syrian nuclear reactor",
+      "category": "military",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Israeli fighter jets destroyed Syria's Al-Kibar nuclear reactor in Operation Orchard.",
+        "operationDetails": {
+          "date": "Night of September 5-6, 2007",
+          "aircraft": "Eight Israeli fighter jets (four F-15s and four F-16s)",
+          "ordnance": "17-18 tons of explosives",
+          "outcome": "Complete destruction of reactor; all planes returned safely"
+        },
+        "theReactor": {
+          "type": "Gas-cooled, graphite-moderated reactor capable of producing weapons-grade plutonium",
+          "assistance": "North Korean technical assistance",
+          "disguise": "Experimental farm",
+          "location": "Northern Syrian desert, approximately 450 kilometers north of Damascus"
+        },
+        "intelligence": "Israel first suspected the reactor's existence in 2004 and obtained solid evidence by early 2006.",
+        "politicalContext": "Prime Minister Ehud Olmert informed President George W. Bush about the reactor and urged a U.S. attack, but Americans refused, preferring diplomatic solutions.",
+        "publicAcknowledgment": "Israel maintained silence for over a decade before officially confirming the attack in March 2018, releasing declassified footage and documents.",
+        "warning": "Officials framed the operation as a warning to Iran regarding nuclear weapons development."
+      },
+      "relatedPeople": ["Ehud Olmert", "Ehud Barak", "George W. Bush"],
+      "relatedEvents": ["Operation Orchard"]
+    },
+    {
+      "id": "2007-002",
+      "date": "2007-11-27",
+      "dateDisplay": "November 27, 2007",
+      "location": "Annapolis, Maryland, USA",
+      "actor": "Israel",
+      "action": "signed",
+      "target": "Annapolis Joint Understanding",
+      "category": "diplomacy",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Israel and Palestinians signed a Joint Understanding at the Annapolis Conference, committing to negotiate a comprehensive peace treaty.",
+        "participants": "Israeli Prime Minister Ehud Olmert, Palestinian Authority President Mahmoud Abbas, US President George W. Bush",
+        "attendees": "Over 40 countries and international organizations including China, Russia, EU, Arab League, Saudi Arabia, and Syria. Hamas and Iran were absent.",
+        "commitments": [
+          "Launch continuous bilateral negotiations",
+          "Conclude comprehensive peace treaty by end of 2008",
+          "Resolve all outstanding issues including all core issues without exception",
+          "Immediately implement Road Map obligations",
+          "Bi-weekly meetings between Olmert and Abbas"
+        ],
+        "steeringCommittee": "Established to lead negotiations.",
+        "outcome": "No final agreement reached. Negotiations stalled due to domestic political constraints and continuing disagreements."
+      },
+      "relatedPeople": ["Ehud Olmert", "Mahmoud Abbas", "George W. Bush"],
+      "relatedDocuments": ["Road Map for Peace"]
+    },
+    {
+      "id": "2008-001",
+      "date": "2008-12-27",
+      "endDate": "2009-01-17",
+      "dateDisplay": "December 27, 2008 - January 17, 2009",
+      "location": "Gaza Strip",
+      "actor": "Israel",
+      "action": "conducted air strikes against",
+      "target": "Hamas",
+      "category": "military",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Israel launched Operation Cast Lead, a major 22-day military campaign against Hamas in Gaza.",
+        "trigger": "Response to eight years of rocket attacks from Hamas and to weaken Hamas's military capabilities.",
+        "phases": {
+          "aerial": "Intensive aerial bombardment beginning December 27, 2008",
+          "ground": "Ground offensive starting January 4, 2009"
+        },
+        "casualties": {
+          "palestinian": "1,385-1,419 killed (majority civilians, including at least 308 children); over 5,000 wounded",
+          "israeli": "13 killed (3 civilians and soldiers)"
+        },
+        "destruction": [
+          "3,540 housing units completely destroyed",
+          "2,870 housing units severely damaged",
+          "Over 20,000 people displaced",
+          "Electricity infrastructure damage estimated at $10 million"
+        ],
+        "hamasTactics": "Hamas deliberately positioned military infrastructure in densely populated areas, including beneath hospitals.",
+        "ceasefire": "Israel declared unilateral ceasefire January 17, 2009; Hamas announced one-week ceasefire the following day.",
+        "investigations": "UN fact-finding missions and human rights organizations found evidence of war crimes by both Israeli forces and Palestinian militias."
+      },
+      "relatedDocuments": ["Goldstone Report"]
+    },
+    {
+      "id": "2010-001",
+      "date": "2010-05-31",
+      "dateDisplay": "May 2010",
+      "location": "International waters near Gaza",
+      "actor": "Israel",
+      "action": "carried out raid against",
+      "target": "Mavi Marmara flotilla",
+      "category": "military",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Israeli commandos raided the Turkish-flagged ship Mavi Marmara attempting to break Israel's naval blockade of Gaza.",
+        "casualties": "Nine Turkish activists and one American of Turkish descent killed.",
+        "palmerReportFindings": {
+          "blockadeLegality": "Israel's blockade was 'imposed as a legitimate security measure' and complied with international law.",
+          "raidAssessment": "While commandos faced 'significant, organised and violent resistance,' the boarding was conducted with 'excessive and unreasonable' force.",
+          "detaineesTreatment": "Israel engaged in 'significant mistreatment' of detainees."
+        },
+        "diplomaticFallout": {
+          "turkishResponse": [
+            "Expelled Israel's ambassador from Ankara",
+            "Suspended all military agreements and defense trade",
+            "Downgraded diplomatic relations to second secretary level",
+            "Threatened increased naval presence in Eastern Mediterranean"
+          ],
+          "turkishDemands": "Full apology, compensation, and lifting of Gaza blockade",
+          "israeliResponse": "Offered regret and compensation but refused full apology, citing concerns about demoralizing citizens"
+        }
+      },
+      "relatedPeople": ["Ahmet Davutoğlu"],
+      "relatedDocuments": ["UN Palmer Report"]
+    },
+    {
+      "id": "2011-001",
+      "date": "2011-01-01",
+      "dateDisplay": "2011",
+      "location": null,
+      "actor": "Israel",
+      "action": "received annual military aid of",
+      "target": "United States",
+      "category": "diplomacy",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Israel continued to receive substantial annual military aid from the United States.",
+        "context": "US military aid to Israel has been a consistent feature of the bilateral relationship since the 1970s."
+      }
+    },
+    {
+      "id": "2011-002",
+      "date": "2011-03-28",
+      "dateDisplay": "March 28, 2011",
+      "location": null,
+      "actor": "Roger Cohen",
+      "action": "analyzed political stability in",
+      "target": "Israel",
+      "category": "analysis",
+      "evidenceType": "media",
+      "details": {
+        "summary": "Journalist Roger Cohen published analysis of political stability issues facing Israel.",
+        "context": "This analysis came during the Arab Spring period, examining regional implications for Israel."
+      }
+    },
+    {
+      "id": "2011-003",
+      "date": "2011-04-02",
+      "dateDisplay": "April 2, 2011",
+      "location": "Tel Aviv",
+      "actor": "Ehud Barak",
+      "action": "warned about diplomatic crisis",
+      "target": "Israel",
+      "category": "politics",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Defense Minister Ehud Barak warned about an impending diplomatic crisis facing Israel.",
+        "context": "This warning came amid regional upheaval from the Arab Spring and deteriorating relations with Turkey."
+      }
+    },
+    {
+      "id": "2011-004",
+      "date": "2011-05-07",
+      "dateDisplay": "May 7, 2011",
+      "location": "Egypt",
+      "actor": "Israel",
+      "action": "required to transition from peace with",
+      "target": "Hosni Mubarak to peace with Egyptian population",
+      "category": "analysis",
+      "evidenceType": "analysis",
+      "details": {
+        "summary": "Following the fall of Hosni Mubarak in the Egyptian revolution, Israel faced the challenge of maintaining peace with a democratizing Egypt.",
+        "context": "The 1979 Egypt-Israel Peace Treaty had been maintained through authoritarian Egyptian leadership. The new dynamic required Israel to build relationships with Egyptian civil society and elected governments."
+      }
+    },
+    {
+      "id": "2011-005",
+      "date": "2011-09-07",
+      "dateDisplay": "September 7, 2011",
+      "location": null,
+      "actor": "Israel",
+      "action": "allegedly leaked",
+      "target": "UN Palmer Commission report",
+      "category": "diplomacy",
+      "evidenceType": "allegation",
+      "details": {
+        "summary": "Israel allegedly leaked the UN Palmer Commission report findings before official release.",
+        "context": "The Palmer Report examined the 2010 Mavi Marmara flotilla incident and concluded Israel's Gaza blockade was legal."
+      }
+    },
+    {
+      "id": "2011-006",
+      "date": "2011-09-07",
+      "dateDisplay": "September 7, 2011",
+      "location": "Turkey-Israel",
+      "actor": "Turkey",
+      "action": "downgraded diplomatic relations with",
+      "target": "Israel",
+      "category": "diplomacy",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Turkey downgraded diplomatic relations with Israel to the level of second secretary following the Mavi Marmara incident.",
+        "context": "This was part of Turkey's response to Israel's refusal to apologize for the flotilla raid that killed Turkish citizens."
+      }
+    },
+    {
+      "id": "2011-007",
+      "date": "2011-09-07",
+      "dateDisplay": "September 7, 2011",
+      "location": null,
+      "actor": "Ahmet Davutoğlu",
+      "action": "announced sanctions against",
+      "target": "Israel",
+      "category": "diplomacy",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Turkish Foreign Minister Ahmet Davutoğlu announced sanctions and diplomatic measures against Israel.",
+        "measures": [
+          "Expulsion of Israeli ambassador",
+          "Suspension of military agreements",
+          "Suspension of defense trade"
+        ]
+      }
+    },
+    {
+      "id": "2011-008",
+      "date": "2011-09-07",
+      "dateDisplay": "September 7, 2011",
+      "location": null,
+      "actor": "Turkey",
+      "action": "suspended military agreements with",
+      "target": "Israel",
+      "category": "military",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Turkey suspended all military agreements and defense trade with Israel.",
+        "context": "Prior to this, Turkey and Israel had maintained close military cooperation including joint exercises and defense contracts."
+      }
+    },
+    {
+      "id": "2011-009",
+      "date": "2011-09-07",
+      "dateDisplay": "September 7, 2011",
+      "location": null,
+      "actor": "Israel",
+      "action": "refused to apologize to",
+      "target": "Turkey",
+      "category": "diplomacy",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Israel refused Turkey's demand for a full apology over the Mavi Marmara raid.",
+        "israeliPosition": "Israel offered regret and compensation but declined a full apology, citing concerns that it would demoralize Israeli citizens and soldiers."
+      }
+    },
+    {
+      "id": "2012-001",
+      "date": "2012-01-01",
+      "dateDisplay": "2012",
+      "location": "West Bank",
+      "actor": "Israel",
+      "action": "maintained territorial control structures through",
+      "target": "West Bank Barrier and settlements",
+      "category": "territorial",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Israel continued to maintain territorial control in the West Bank through the separation barrier and settlement infrastructure.",
+        "westBankBarrier": "A network of walls and fences that Israel describes as a security measure; Palestinians and critics call it an apartheid wall that annexes Palestinian land.",
+        "settlements": "Israeli civilian communities in the West Bank, considered illegal under international law by most countries but disputed by Israel."
+      }
+    },
+    {
+      "id": "2012-002",
+      "date": "2012-04-01",
+      "dateDisplay": "April 2012",
+      "location": null,
+      "actor": "Israel",
+      "action": "scheduled major joint military exercise with",
+      "target": "United States",
+      "category": "military",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Israel and the United States scheduled a major joint military exercise, demonstrating continued security cooperation.",
+        "context": "US-Israel military exercises are a regular feature of the bilateral defense relationship."
+      }
+    },
+    {
+      "id": "2012-003",
+      "date": "2012-11-14",
+      "endDate": "2012-11-21",
+      "dateDisplay": "November 14-21, 2012",
+      "location": "Gaza Strip",
+      "actor": "Israel",
+      "action": "conducted military operation against",
+      "target": "Hamas",
+      "category": "military",
+      "evidenceType": "confirmed",
+      "details": {
+        "summary": "Israel launched Operation Pillar of Defense against Hamas and militant groups in Gaza.",
+        "trigger": "Over 120 rockets fired from Gaza between November 10-14; anti-tank missile struck IDF jeep November 10, wounding four soldiers.",
+        "keyEvents": {
+          "assassinationOfJabari": "November 14 at approximately 4 p.m., Israeli Air Force killed Ahmed Jabari, chief of Hamas's military wing, in targeted strike.",
+          "israeliCasualties": "November 15, three Israelis killed when rocket struck apartment building in Kiryat Malakhi."
+        },
+        "ceasefire": "Brokered by Egypt with American intervention, took effect November 21 at 9 p.m.",
+        "claims": {
+          "israel": "Operation 'severely impaired Hamas's launching capabilities'",
+          "hamas": "Rocket strikes led to the ceasefire deal"
+        }
+      }
+    }
+  ],
+  "people": {
+    "saddam_hussein": {
+      "name": "Saddam Hussein",
+      "fullName": "Saddam Hussein Abd al-Majid al-Tikriti",
+      "role": "President of Iraq (1979-2003)",
+      "nationality": "Iraqi",
+      "born": "April 28, 1937",
+      "died": "December 30, 2006",
+      "biography": "Saddam Hussein served as the fifth President of Iraq from 1979 until 2003. His authoritarian rule was marked by the suppression of internal dissent, wars with Iran (1980-1988) and Kuwait (1990-1991), and the development of weapons programs. During the Gulf War, he ordered Scud missile attacks on Israel in an attempt to fracture the US-led coalition. He was captured by US forces in December 2003 and executed in 2006 following conviction for crimes against humanity.",
+      "relatedEvents": ["1990-001", "1991-001"]
+    },
+    "uri_savir": {
+      "name": "Uri Savir",
+      "role": "Israeli diplomat, Director-General of the Foreign Ministry",
+      "nationality": "Israeli",
+      "biography": "Uri Savir served as Israel's Director-General of the Foreign Ministry and was a key negotiator in the Oslo peace process. In May 1993, Foreign Minister Shimon Peres asked Savir to participate in the secret Oslo talks. He later wrote 'The Process: 1,100 Days That Changed the Middle East' documenting his experiences in the negotiations.",
+      "relatedEvents": ["1990-002"]
+    },
+    "yasser_arafat": {
+      "name": "Yasser Arafat",
+      "fullName": "Mohammed Yasser Abdel Rahman Abdel Raouf Arafat al-Qudwa",
+      "role": "Chairman of the Palestine Liberation Organization (1969-2004), President of the Palestinian Authority (1994-2004)",
+      "nationality": "Palestinian",
+      "born": "August 24, 1929",
+      "died": "November 11, 2004",
+      "biography": "Yasser Arafat was a Palestinian political leader who served as Chairman of the PLO from 1969 until his death in 2004. He co-founded Fatah in 1959 and led the Palestinian national movement through decades of conflict with Israel. In 1993, he signed the Oslo Accords with Israel, for which he shared the Nobel Peace Prize with Yitzhak Rabin and Shimon Peres in 1994. He served as the first President of the Palestinian Authority from 1994 until his death.",
+      "relatedEvents": ["1990-003", "1993-001", "1993-002", "1995-001", "1999-001", "2000-001", "2001-001"]
+    },
+    "ehud_barak": {
+      "name": "Ehud Barak",
+      "role": "Prime Minister of Israel (1999-2001), Defense Minister (2007-2013)",
+      "nationality": "Israeli",
+      "born": "February 12, 1942",
+      "biography": "Ehud Barak is a retired Israeli politician and military commander. The most decorated soldier in Israeli history, he served as Chief of Staff of the IDF before entering politics. Elected Prime Minister in May 1999, he led Israel's negotiations at Camp David in 2000 and Taba in 2001. He later served as Defense Minister under several prime ministers. He was involved in the decision-making for Operation Orchard against Syria's nuclear reactor.",
+      "relatedEvents": ["1999-001", "1999-002", "2000-001", "2001-001", "2007-001", "2011-003"]
+    },
+    "yitzhak_rabin": {
+      "name": "Yitzhak Rabin",
+      "role": "Prime Minister of Israel (1974-1977, 1992-1995)",
+      "nationality": "Israeli",
+      "born": "March 1, 1922",
+      "died": "November 4, 1995",
+      "biography": "Yitzhak Rabin was an Israeli politician and general who served two terms as Prime Minister. A military hero who led the IDF during the Six-Day War, he later became a peace advocate. He signed the Oslo Accords with Yasser Arafat and shared the 1994 Nobel Peace Prize. He was assassinated by a right-wing Israeli extremist on November 4, 1995, for his role in the peace process.",
+      "relatedEvents": ["1993-001", "1995-001"]
+    },
+    "ariel_sharon": {
+      "name": "Ariel Sharon",
+      "role": "Prime Minister of Israel (2001-2006)",
+      "nationality": "Israeli",
+      "born": "February 26, 1928",
+      "died": "January 11, 2014",
+      "biography": "Ariel Sharon was an Israeli general and politician who served as Prime Minister from 2001 to 2006. Known as a hardliner, he surprised many by implementing the 2005 Gaza Disengagement Plan, withdrawing all Israeli settlers and military from the Gaza Strip. He suffered a severe stroke in January 2006 and remained in a coma until his death in 2014.",
+      "relatedEvents": ["2005-001", "2005-002", "2005-003"]
+    },
+    "ehud_olmert": {
+      "name": "Ehud Olmert",
+      "role": "Prime Minister of Israel (2006-2009)",
+      "nationality": "Israeli",
+      "born": "September 30, 1945",
+      "biography": "Ehud Olmert served as Prime Minister of Israel from 2006 to 2009. He became Prime Minister after Ariel Sharon's incapacitation. He led Israel during the 2006 Lebanon War and Operation Cast Lead in Gaza. He authorized Operation Orchard against Syria's nuclear reactor and led negotiations at the Annapolis Conference.",
+      "relatedEvents": ["2006-001", "2007-001", "2007-002", "2008-001"]
+    },
+    "mahmoud_abbas": {
+      "name": "Mahmoud Abbas",
+      "alias": "Abu Mazen",
+      "role": "President of the Palestinian Authority (2005-present)",
+      "nationality": "Palestinian",
+      "born": "March 26, 1935",
+      "biography": "Mahmoud Abbas, also known as Abu Mazen, has served as President of the Palestinian Authority since 2005 and as Chairman of the PLO since 2004. He was a key figure in the Oslo negotiations and signed the Annapolis Joint Understanding with Ehud Olmert in 2007.",
+      "relatedEvents": ["2007-002"]
+    },
+    "ahmet_davutoglu": {
+      "name": "Ahmet Davutoğlu",
+      "role": "Foreign Minister of Turkey (2009-2014), Prime Minister (2014-2016)",
+      "nationality": "Turkish",
+      "born": "February 26, 1959",
+      "biography": "Ahmet Davutoğlu served as Turkey's Foreign Minister during the diplomatic crisis with Israel following the Mavi Marmara incident. He announced sanctions against Israel in September 2011, including expulsion of the Israeli ambassador and suspension of military agreements.",
+      "relatedEvents": ["2011-006", "2011-007", "2011-008"]
+    }
+  },
+  "topics": {
+    "oslo_accords": {
+      "name": "Oslo Accords",
+      "type": "Peace Agreement",
+      "dates": {
+        "osloI": "September 13, 1993",
+        "osloII": "September 28, 1995"
+      },
+      "description": "The Oslo Accords were a pair of agreements between Israel and the Palestine Liberation Organization that marked a turning point in the Israeli-Palestinian conflict. Oslo I (1993) established mutual recognition and a framework for Palestinian self-governance. Oslo II (1995) expanded Palestinian autonomy and divided the West Bank into Areas A, B, and C.",
+      "keyPoints": [
+        "First direct, face-to-face agreement between Israel and the PLO",
+        "PLO recognized Israel's right to exist; Israel recognized PLO as Palestinian representative",
+        "Created the Palestinian Authority",
+        "Established Areas A, B, and C in the West Bank",
+        "Did not resolve final status issues (Jerusalem, refugees, borders, settlements)"
+      ],
+      "relatedEvents": ["1990-002", "1990-003", "1993-001", "1993-002", "1995-001"]
+    },
+    "gaza_disengagement": {
+      "name": "Gaza Disengagement (2005)",
+      "type": "Israeli Withdrawal",
+      "date": "August-September 2005",
+      "description": "The unilateral Israeli withdrawal from the Gaza Strip in 2005, proposed by Prime Minister Ariel Sharon. Israel dismantled all 21 settlements and evacuated approximately 8,500 settlers.",
+      "keyPoints": [
+        "Proposed by Ariel Sharon in 2003",
+        "55,000 Israeli troops deployed to ensure compliance",
+        "Settlers received $150,000-$400,000 compensation",
+        "Four West Bank settlements also dismantled",
+        "Ended nearly 40 years of Israeli military presence in Gaza"
+      ],
+      "relatedEvents": ["2005-001", "2005-002", "2005-003"]
+    },
+    "operation_cast_lead": {
+      "name": "Operation Cast Lead",
+      "type": "Military Operation",
+      "date": "December 27, 2008 - January 18, 2009",
+      "description": "A 22-day Israeli military campaign against Hamas in Gaza, launched in response to rocket attacks. The operation resulted in significant casualties and infrastructure destruction in Gaza.",
+      "casualties": {
+        "palestinian": "1,385-1,419 killed (majority civilians)",
+        "israeli": "13 killed"
+      },
+      "relatedEvents": ["2008-001"]
+    },
+    "mavi_marmara": {
+      "name": "Mavi Marmara Incident",
+      "type": "International Incident",
+      "date": "May 31, 2010",
+      "description": "The Israeli raid on a Turkish-flagged ship attempting to break the Gaza blockade, resulting in 10 deaths and a major diplomatic crisis between Israel and Turkey.",
+      "keyPoints": [
+        "Nine Turkish activists and one American killed",
+        "UN Palmer Report found blockade legal but raid excessive",
+        "Led to Turkey expelling Israeli ambassador",
+        "Turkey suspended military agreements with Israel"
+      ],
+      "relatedEvents": ["2010-001", "2011-005", "2011-006", "2011-007", "2011-008", "2011-009"]
+    }
+  }
+}

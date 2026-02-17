@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Archive Interface</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/chat.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Left Sidebar - Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">Research Archive</h1>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h2 class="nav-section-title">Case Sections</h2>
+                    <ul class="nav-list">
+                        <li class="nav-item active">
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span>Timeline</span>
+                        </li>
+                        <li class="nav-item">
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            <span>People</span>
+                        </li>
+                        <li class="nav-item">
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            <span>Documents</span>
+                        </li>
+                        <li class="nav-item">
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            <span>Events</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="nav-section">
+                    <h2 class="nav-section-title">Archive</h2>
+                    <div class="search-box">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search archive...">
+                    </div>
+                </div>
+                
+                <div class="nav-section">
+                    <h2 class="nav-section-title">Saved Chats</h2>
+                    <ul class="nav-list saved-chats">
+                        <li class="nav-item chat-item">
+                            <span class="chat-title">Financial Records Analysis</span>
+                            <span class="chat-date">Feb 14, 2026</span>
+                        </li>
+                        <li class="nav-item chat-item">
+                            <span class="chat-title">Witness Testimony Review</span>
+                            <span class="chat-date">Feb 12, 2026</span>
+                        </li>
+                        <li class="nav-item chat-item">
+                            <span class="chat-title">Timeline Reconstruction</span>
+                            <span class="chat-date">Feb 10, 2026</span>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Center Panel - Main Chat -->
+        <main class="main-panel">
+            <div class="chat-container" id="chatContainer">
+                <!-- Welcome Screen (shown when no messages) -->
+                <div class="welcome-screen" id="welcomeScreen">
+                    <div class="welcome-content">
+                        <!-- Logo Icon -->
+                        <div class="welcome-logo">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
+                            </svg>
+                        </div>
+                        
+                        <!-- Heading -->
+                        <h1 class="welcome-heading">What would you like to investigate?</h1>
+                        
+                        <!-- Input Area -->
+                        <div class="welcome-input-container">
+                            <div class="chat-input-wrapper">
+                                <button class="btn-attach" aria-label="Attach file">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 4v16m8-8H4"/>
+                                    </svg>
+                                </button>
+                                <input 
+                                    type="text" 
+                                    class="chat-input" 
+                                    id="chatInput"
+                                    placeholder="Ask about documented events, people, or timelines..."
+                                >
+                                <div class="input-actions">
+                                    <button class="btn-voice" id="voiceBtn" aria-label="Voice input">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                                        </svg>
+                                    </button>
+                                    <button class="btn-send" id="sendBtn" aria-label="Send message">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M12 19V5m0 0l-7 7m7-7l7 7"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Suggested Topics -->
+                        <div class="suggested-topics">
+                            <button class="topic-chip" data-query="What happened at the Oslo Accords in 1993?">
+                                <svg class="topic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <span>Oslo Accords 1993</span>
+                            </button>
+                            <button class="topic-chip" data-query="Tell me about Epstein documents released in 2024">
+                                <svg class="topic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                <span>Epstein documents</span>
+                            </button>
+                            <button class="topic-chip" data-query="What was the Gaza disengagement in 2005?">
+                                <svg class="topic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                    <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                                <span>Gaza Withdrawal 2005</span>
+                            </button>
+                            <button class="topic-chip" data-query="Who was Ehud Barak?">
+                                <svg class="topic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                </svg>
+                                <span>Key figures</span>
+                            </button>
+                            <button class="topic-chip" data-query="What happened in the 2006 Lebanon War?">
+                                <svg class="topic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                </svg>
+                                <span>2006 Lebanon War</span>
+                            </button>
+                            <button class="topic-chip" data-query="Tell me about Ghislaine Maxwell's conviction">
+                                <svg class="topic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
+                                </svg>
+                                <span>Maxwell conviction</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Messages (hidden initially, shown after first message) -->
+                <div class="chat-messages hidden" id="chatMessages">
+                </div>
+
+                <!-- Chat Input Area (shown when in chat mode) -->
+                <div class="chat-input-container hidden" id="chatInputContainer">
+                    <div class="chat-input-wrapper">
+                        <button class="btn-attach" aria-label="Attach file">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 4v16m8-8H4"/>
+                            </svg>
+                        </button>
+                        <input 
+                            type="text" 
+                            class="chat-input chat-input-bottom" 
+                            id="chatInputBottom"
+                            placeholder="Ask about documented events, people, or timelines..."
+                        >
+                        <div class="input-actions">
+                            <button class="btn-voice btn-voice-bottom" aria-label="Voice input">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                                </svg>
+                            </button>
+                            <button class="btn-send btn-send-bottom" aria-label="Send message">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 19V5m0 0l-7 7m7-7l7 7"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Panel - Context Drawer -->
+        <aside class="context-drawer" id="contextDrawer">
+            <div class="drawer-header">
+                <h2 class="drawer-title">Sources & Context</h2>
+                <button class="btn-close-drawer" id="closeDrawer" aria-label="Close context drawer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="drawer-content">
+                <div class="drawer-section">
+                    <h3 class="drawer-section-title">Referenced Sources</h3>
+                    <ul class="source-list">
+                        <li class="source-item">
+                            <span class="source-type">Court Record</span>
+                            <span class="source-name">Case Filing #2024-CV-1847</span>
+                            <span class="source-date">Filed: Jan 15, 2024</span>
+                        </li>
+                        <li class="source-item">
+                            <span class="source-type">Official Document</span>
+                            <span class="source-name">SEC Filing 10-K Annual Report</span>
+                            <span class="source-date">Published: Dec 2023</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="drawer-section">
+                    <h3 class="drawer-section-title">Related People</h3>
+                    <ul class="related-list">
+                        <li class="related-item">
+                            <div class="related-avatar">JD</div>
+                            <div class="related-info">
+                                <span class="related-name">John Doe</span>
+                                <span class="related-role">Former Executive</span>
+                            </div>
+                        </li>
+                        <li class="related-item">
+                            <div class="related-avatar">JS</div>
+                            <div class="related-info">
+                                <span class="related-name">Jane Smith</span>
+                                <span class="related-role">Witness</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="drawer-section">
+                    <h3 class="drawer-section-title">Related Events</h3>
+                    <ul class="events-list">
+                        <li class="event-item">
+                            <span class="event-date">Mar 2023</span>
+                            <span class="event-name">Initial Investigation Opened</span>
+                        </li>
+                        <li class="event-item">
+                            <span class="event-date">Jul 2023</span>
+                            <span class="event-name">Grand Jury Convened</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Toggle button for context drawer (mobile/collapsed) -->
+        <button class="btn-toggle-drawer" id="toggleDrawer" aria-label="Toggle context drawer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 5l7 7-7 7"/>
+            </svg>
+        </button>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
