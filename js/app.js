@@ -305,6 +305,61 @@ function switchToChatMode() {
     }
 }
 
+/**
+ * Reset to home/welcome screen with fresh chat
+ */
+function resetToHome() {
+    // Show welcome screen
+    if (welcomeScreen) {
+        welcomeScreen.classList.remove('hidden');
+    }
+    
+    // Hide chat messages and input container
+    if (chatMessages) {
+        chatMessages.classList.add('hidden');
+        // Clear all messages except the header logo
+        const headerLogo = chatMessages.querySelector('.chat-header-logo');
+        chatMessages.innerHTML = '';
+        if (headerLogo) {
+            chatMessages.appendChild(headerLogo);
+        }
+    }
+    if (chatInputContainer) {
+        chatInputContainer.classList.add('hidden');
+    }
+    
+    // Clear inputs
+    if (chatInput) {
+        chatInput.value = '';
+    }
+    if (chatInputBottom) {
+        chatInputBottom.value = '';
+    }
+    
+    // Hide context drawer
+    const drawer = document.getElementById('contextDrawer');
+    const toggleBtn = document.getElementById('toggleDrawer');
+    if (drawer) {
+        drawer.classList.add('hidden');
+    }
+    if (toggleBtn) {
+        toggleBtn.classList.add('hidden');
+    }
+    
+    // Clear context drawer content
+    const sourceList = document.getElementById('sourceList');
+    const relatedPeopleList = document.getElementById('relatedPeopleList');
+    const keyThemesList = document.getElementById('keyThemesList');
+    if (sourceList) sourceList.innerHTML = '';
+    if (relatedPeopleList) relatedPeopleList.innerHTML = '';
+    if (keyThemesList) keyThemesList.innerHTML = '';
+    
+    // Focus welcome input
+    if (chatInput) {
+        chatInput.focus();
+    }
+}
+
 // ===========================================
 // MESSAGE HANDLING
 // ===========================================
@@ -719,7 +774,7 @@ ${scrapedContext}`;
                     { role: 'system', content: systemPrompt },
                     { role: 'user', content: userMessage }
                 ],
-                max_tokens: 50,
+                max_tokens: 1000,
                 temperature: 0.7
             })
         });
@@ -732,11 +787,6 @@ ${scrapedContext}`;
         const data = await response.json();
         // Remove emojis from response
         let cleanContent = data.choices[0].message.content.replace(/[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]|[\u{1F900}-\u{1F9FF}]|[\u{1FA00}-\u{1FA6F}]|[\u{1FA70}-\u{1FAFF}]/gu, '');
-        // Limit to 15 words
-        const words = cleanContent.split(/\s+/);
-        if (words.length > 15) {
-            cleanContent = words.slice(0, 15).join(' ') + '...';
-        }
         return {
             directAnswer: cleanContent,
             context: null,
@@ -1243,16 +1293,15 @@ function updateContextDrawer(query) {
     
     if (!drawer || !sourceList || !relatedPeopleList || !keyThemesList) return;
     
-    // Show drawer and toggle button
-    drawer.classList.remove('hidden');
-    if (toggleBtn) toggleBtn.classList.remove('hidden');
-    
     // Clear existing content
     sourceList.innerHTML = '';
     relatedPeopleList.innerHTML = '';
     keyThemesList.innerHTML = '';
     
     const queryLower = query.toLowerCase();
+    
+    // Track if we found any relevant content
+    let hasRelevantContent = false;
     
     // Find relevant documents from our data
     if (scrapedJudaismData && scrapedJudaismData.documents) {
@@ -1269,26 +1318,22 @@ function updateContextDrawer(query) {
             }
         });
         
-        // If no specific matches, show general relevant docs (limit 5)
-        if (relevantDocs.length === 0) {
-            relevantDocs = scrapedJudaismData.documents.slice(0, 5);
-        } else {
-            relevantDocs = relevantDocs.slice(0, 5);
+        // Only show documents if we found matches - NO fallback to defaults
+        if (relevantDocs.length > 0) {
+            hasRelevantContent = true;
+            relevantDocs.slice(0, 5).forEach(doc => {
+                const li = document.createElement('li');
+                li.className = 'source-item';
+                li.innerHTML = `
+                    <span class="source-type">${doc.type || 'Document'}</span>
+                    <span class="source-name">${doc.id}</span>
+                    <span class="source-date">${doc.matches || 1} match(es)</span>
+                `;
+                sourceList.appendChild(li);
+            });
         }
         
-        // Add documents to source list
-        relevantDocs.forEach(doc => {
-            const li = document.createElement('li');
-            li.className = 'source-item';
-            li.innerHTML = `
-                <span class="source-type">${doc.type || 'Document'}</span>
-                <span class="source-name">${doc.id}</span>
-                <span class="source-date">${doc.matches || 1} match(es)</span>
-            `;
-            sourceList.appendChild(li);
-        });
-        
-        // Find relevant people
+        // Find relevant people - only if they match the query
         if (scrapedJudaismData.summary && scrapedJudaismData.summary.namedIndividuals) {
             scrapedJudaismData.summary.namedIndividuals.forEach(person => {
                 if (queryLower.includes(person.toLowerCase()) || 
@@ -1296,51 +1341,56 @@ function updateContextDrawer(query) {
                     relevantPeople.add(person);
                 }
             });
-            
-            // If no specific matches, show some key people
-            if (relevantPeople.size === 0) {
-                ['Woody Allen', 'Elisabeth Maxwell', 'Sheldon Adelson', 'Ivanka Trump', 'Jared Kushner'].forEach(p => relevantPeople.add(p));
-            }
         }
         
-        // Add people to list
-        Array.from(relevantPeople).slice(0, 5).forEach(person => {
-            const li = document.createElement('li');
-            li.className = 'related-item';
-            const initials = person.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-            li.innerHTML = `
-                <div class="related-avatar">${initials}</div>
-                <div class="related-info">
-                    <span class="related-name">${escapeHtml(person)}</span>
-                    <span class="related-role">In Epstein documents</span>
-                </div>
-            `;
-            relatedPeopleList.appendChild(li);
-        });
+        // Only add people if we found matches - NO fallback to defaults
+        if (relevantPeople.size > 0) {
+            hasRelevantContent = true;
+            Array.from(relevantPeople).slice(0, 5).forEach(person => {
+                const li = document.createElement('li');
+                li.className = 'related-item';
+                const initials = person.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+                li.innerHTML = `
+                    <div class="related-avatar">${initials}</div>
+                    <div class="related-info">
+                        <span class="related-name">${escapeHtml(person)}</span>
+                        <span class="related-role">In Epstein documents</span>
+                    </div>
+                `;
+                relatedPeopleList.appendChild(li);
+            });
+        }
         
-        // Find relevant themes
+        // Find relevant themes - only if they match the query
         if (scrapedJudaismData.summary && scrapedJudaismData.summary.keyThemes) {
             scrapedJudaismData.summary.keyThemes.forEach(theme => {
                 if (queryLower.split(' ').some(word => word.length > 3 && theme.toLowerCase().includes(word))) {
                     relevantThemes.add(theme);
                 }
             });
-            
-            // If no specific matches, show some key themes
-            if (relevantThemes.size === 0) {
-                ['Chabad as state-sanctioned Judaism used by Putin', 'Judaism classes taken over the phone on the island', 'Conversion to Judaism communications'].forEach(t => relevantThemes.add(t));
-            }
         }
         
-        // Add themes to list
-        Array.from(relevantThemes).slice(0, 5).forEach(theme => {
-            const li = document.createElement('li');
-            li.className = 'event-item';
-            li.innerHTML = `
-                <span class="event-name">${escapeHtml(theme)}</span>
-            `;
-            keyThemesList.appendChild(li);
-        });
+        // Only add themes if we found matches - NO fallback to defaults
+        if (relevantThemes.size > 0) {
+            hasRelevantContent = true;
+            Array.from(relevantThemes).slice(0, 5).forEach(theme => {
+                const li = document.createElement('li');
+                li.className = 'event-item';
+                li.innerHTML = `
+                    <span class="event-name">${escapeHtml(theme)}</span>
+                `;
+                keyThemesList.appendChild(li);
+            });
+        }
+    }
+    
+    // Only show drawer if we have relevant content to display
+    if (hasRelevantContent) {
+        drawer.classList.remove('hidden');
+        if (toggleBtn) toggleBtn.classList.remove('hidden');
+    } else {
+        drawer.classList.add('hidden');
+        if (toggleBtn) toggleBtn.classList.add('hidden');
     }
 }
 
@@ -1461,6 +1511,21 @@ async function init() {
     document.querySelectorAll('.nav-list').forEach(list => {
         list.addEventListener('click', handleNavClick);
     });
+    
+    // Logo and Star click handlers - reset to home
+    const logoText = document.getElementById('logoText');
+    const welcomeStarLogo = document.getElementById('welcomeStarLogo');
+    const chatStarLogo = document.getElementById('chatStarLogo');
+    
+    if (logoText) {
+        logoText.addEventListener('click', resetToHome);
+    }
+    if (welcomeStarLogo) {
+        welcomeStarLogo.addEventListener('click', resetToHome);
+    }
+    if (chatStarLogo) {
+        chatStarLogo.addEventListener('click', resetToHome);
+    }
     
     // Focus input
     if (chatInput) {

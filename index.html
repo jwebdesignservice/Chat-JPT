@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jews & Epstein Files</title>
+    <title>Chat JPT</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -13,6 +13,88 @@
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/chat.css">
     <style>
+        /* Preloader Styles */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #FFFFFF;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        .preloader.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .preloader-star {
+            width: 150px;
+            height: 150px;
+            opacity: 0;
+            animation: preloader-spin 2s linear infinite, fade-in-star 0.8s ease forwards;
+            transition: transform 1.5s cubic-bezier(0.2, 0, 0.2, 1), opacity 0.5s ease;
+        }
+        .preloader.expanding .preloader-star {
+            transform: scale(25);
+            opacity: 0;
+        }
+        .preloader-text {
+            margin-top: 40px;
+            font-family: 'Inter', sans-serif;
+            font-size: 32px;
+            font-weight: 600;
+            color: #0038B8;
+            letter-spacing: -0.01em;
+            opacity: 0;
+            animation: fade-in-text 0.8s ease forwards;
+            transition: opacity 0.5s ease;
+        }
+        .preloader.expanding .preloader-text {
+            opacity: 0;
+        }
+        @keyframes fade-in-star {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .preloader-dots {
+            display: inline-block;
+            animation: dots 1.5s steps(4, end) infinite;
+            width: 24px;
+            text-align: left;
+        }
+        @keyframes preloader-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes fade-in-text {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes dots {
+            0%, 20% { content: ''; }
+            40% { content: '.'; }
+            60% { content: '..'; }
+            80%, 100% { content: '...'; }
+        }
+        .preloader.expanding .preloader-text {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        /* Main content hidden during preload */
+        .app-container {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .app-container.loaded {
+            opacity: 1;
+        }
+        
         @keyframes spin {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
@@ -34,36 +116,18 @@
             object-fit: contain;
         }
         
-        /* Audio Player Styles */
-        .audio-player-container {
+        /* Audio Player Controls */
+        .audio-controls {
             position: fixed;
             bottom: 20px;
             right: 20px;
             z-index: 1000;
             display: flex;
-            flex-direction: column;
-            align-items: flex-end;
             gap: 10px;
         }
-        .audio-embed-wrapper {
-            width: 280px;
-            height: 80px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            background: #fff;
-            position: relative;
-        }
-        .audio-embed-wrapper iframe {
-            width: 600px;
-            height: 204px;
-            border: none;
-            transform: scale(0.47);
-            transform-origin: top left;
-        }
-        .mute-btn {
-            width: 40px;
-            height: 40px;
+        .audio-btn {
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             background-color: var(--color-primary-600);
             color: white;
@@ -74,36 +138,45 @@
             justify-content: center;
             box-shadow: 0 4px 12px rgba(0, 56, 184, 0.3);
             transition: all 0.2s ease;
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            z-index: 10;
         }
-        .mute-btn:hover {
+        .audio-btn:hover {
             background-color: var(--color-primary-500);
             transform: scale(1.05);
         }
-        .mute-btn svg {
+        .audio-btn svg {
             width: 20px;
             height: 20px;
         }
-        .mute-btn .icon-muted {
+        .audio-btn .icon-pause,
+        .audio-btn .icon-muted {
             display: none;
         }
-        .mute-btn.muted .icon-unmuted {
+        .audio-btn.playing .icon-play {
             display: none;
         }
-        .mute-btn.muted .icon-muted {
+        .audio-btn.playing .icon-pause {
+            display: block;
+        }
+        .audio-btn.muted .icon-unmuted {
+            display: none;
+        }
+        .audio-btn.muted .icon-muted {
             display: block;
         }
     </style>
 </head>
 <body>
-    <div class="app-container">
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <img src="Images/David Flag.png" alt="Star of David" class="preloader-star">
+        <div class="preloader-text">Welcome To Chat JPT<span class="preloader-dots">...</span></div>
+    </div>
+
+    <div class="app-container" id="appContainer">
         <!-- Left Sidebar - Navigation -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <h1 class="logo">Jews & Epstein Files</h1>
+                <h1 class="logo" id="logoText" style="cursor: pointer;">Chat JPT</h1>
             </div>
             
             <nav class="sidebar-nav">
@@ -163,7 +236,7 @@
                     <div class="welcome-content">
                         <!-- Logo Icon -->
                         <div class="welcome-logo">
-                            <img src="Images/David Flag.png" alt="Star of David" class="spinning-star" style="width: 80px; height: 80px; object-fit: contain;">
+                            <img src="Images/David Flag.png" alt="Star of David" class="spinning-star" id="welcomeStarLogo" style="width: 80px; height: 80px; object-fit: contain; cursor: pointer;">
                         </div>
                         
                         <!-- Heading -->
@@ -245,7 +318,7 @@
                 <div class="chat-messages hidden" id="chatMessages">
                     <!-- Spinning star header for chat -->
                     <div class="chat-header-logo">
-                        <img src="Images/David Flag.png" alt="Star of David" class="spinning-star">
+                        <img src="Images/David Flag.png" alt="Star of David" class="spinning-star" id="chatStarLogo" style="cursor: pointer;">
                     </div>
                 </div>
 
@@ -320,46 +393,111 @@
         </button>
     </div>
 
-    <!-- Audio Player with Mute Button -->
-    <div class="audio-player-container">
-        <div class="audio-embed-wrapper">
-            <button class="mute-btn" id="muteBtn" aria-label="Mute/Unmute audio">
-                <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M15.536 8.464a5 5 0 010 7.072M18.364 5.636a9 9 0 010 12.728M11 5L6 9H2v6h4l5 4V5z"/>
-                </svg>
-                <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/>
-                </svg>
-            </button>
-            <iframe id="audioFrame" src="https://audio.com/embed/audio/1830616681604509?theme=image" allow="autoplay"></iframe>
-        </div>
+    <!-- Hidden Video for Audio (Hava Nagila) -->
+    <video id="bgMusic" loop style="display: none;">
+        <source src="audio/hava-nagila.mp4" type="video/mp4">
+    </video>
+
+    <!-- Audio Controls -->
+    <div class="audio-controls">
+        <button class="audio-btn" id="playBtn" aria-label="Play/Pause">
+            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+            </svg>
+            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+            </svg>
+        </button>
+        <button class="audio-btn" id="muteBtn" aria-label="Mute/Unmute">
+            <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M15.536 8.464a5 5 0 010 7.072M18.364 5.636a9 9 0 010 12.728M11 5L6 9H2v6h4l5 4V5z"/>
+            </svg>
+            <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/>
+            </svg>
+        </button>
     </div>
 
     <script src="js/app.js"></script>
     <script>
         (function() {
+            // Preloader Logic
+            const preloader = document.getElementById('preloader');
+            const appContainer = document.getElementById('appContainer');
+            const bgMusic = document.getElementById('bgMusic');
+            const playBtn = document.getElementById('playBtn');
             const muteBtn = document.getElementById('muteBtn');
-            const audioFrame = document.getElementById('audioFrame');
-            let isMuted = false;
-            const audioSrc = 'https://audio.com/embed/audio/1830616681604509?theme=image';
+            let musicStarted = false;
             
-            muteBtn.addEventListener('click', function() {
-                isMuted = !isMuted;
-                muteBtn.classList.toggle('muted', isMuted);
+            // Try to start music
+            function tryAutoplay() {
+                if (musicStarted) return;
+                bgMusic.play().then(function() {
+                    musicStarted = true;
+                    playBtn.classList.add('playing');
+                }).catch(function(error) {
+                    console.log('Autoplay blocked by browser policy');
+                });
+            }
+            
+            // Try autoplay immediately when script loads
+            tryAutoplay();
+            
+            // Try again when DOM is ready
+            document.addEventListener('DOMContentLoaded', tryAutoplay);
+            
+            // Try again when page fully loads
+            window.addEventListener('load', function() {
+                tryAutoplay();
                 
-                if (isMuted) {
-                    audioFrame.src = 'about:blank';
+                // Wait for 2.5 seconds of spinning, then expand
+                setTimeout(function() {
+                    preloader.classList.add('expanding');
+                    
+                    // After expansion animation, fade out and show content
+                    setTimeout(function() {
+                        preloader.classList.add('fade-out');
+                        appContainer.classList.add('loaded');
+                        
+                        // Remove preloader from DOM after fade
+                        setTimeout(function() {
+                            preloader.style.display = 'none';
+                        }, 500);
+                    }, 1200);
+                }, 2500);
+            });
+            
+            // Try on any user interaction (required by most browsers)
+            ['click', 'touchstart', 'keydown'].forEach(function(event) {
+                document.addEventListener(event, function onInteraction() {
+                    if (!musicStarted) {
+                        bgMusic.play().then(function() {
+                            musicStarted = true;
+                            playBtn.classList.add('playing');
+                        }).catch(function() {});
+                    }
+                    document.removeEventListener(event, onInteraction);
+                }, { once: true });
+            });
+            
+            // Play/Pause button
+            playBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (bgMusic.paused) {
+                    bgMusic.play();
+                    musicStarted = true;
+                    playBtn.classList.add('playing');
                 } else {
-                    audioFrame.src = audioSrc;
+                    bgMusic.pause();
+                    playBtn.classList.remove('playing');
                 }
             });
             
-            // Loop by reloading iframe every 3 minutes (approximate song length)
-            setInterval(function() {
-                if (!isMuted && audioFrame.src.includes('audio.com')) {
-                    audioFrame.src = audioSrc;
-                }
-            }, 180000);
+            // Mute button
+            muteBtn.addEventListener('click', function() {
+                bgMusic.muted = !bgMusic.muted;
+                muteBtn.classList.toggle('muted', bgMusic.muted);
+            });
         })();
     </script>
 </body>
