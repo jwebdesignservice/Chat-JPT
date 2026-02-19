@@ -1,0 +1,14 @@
+# Environment variables
+.env
+.env.local
+.env.production
+
+# API Keys - never commit these
+API Key/
+
+# Dependencies
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db

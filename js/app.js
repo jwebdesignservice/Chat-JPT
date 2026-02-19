@@ -36,8 +36,8 @@ const OPENAI_CONFIG = {
     baseUrl: 'https://api.openai.com/v1/chat/completions',
     // Model to use (gpt-3.5-turbo is fast and cheap, gpt-4 is more capable)
     model: 'gpt-3.5-turbo',
-    // Your OpenAI API key - REPLACE THIS WITH YOUR ACTUAL KEY
-    apiKey: 'YOUR_OPENAI_API_KEY_HERE',
+    // Your OpenAI API key - Set this to your key locally (do not commit to git)
+    apiKey: 'YOUR_API_KEY_HERE',
     // Set to true to use OpenAI, false for demo mode
     useOpenAI: true
 };
@@ -397,8 +397,8 @@ function createAIMessage(response) {
             .replace(/\*(.*?)\*/g, '<em>$1</em>')
             .replace(/`(.*?)`/g, '<code>$1</code>');
         
-        // If using Ollama (plain text response), don't add "Direct Answer:" prefix
-        if (OLLAMA_CONFIG.useOllama && !response.context && response.evidence.length === 0) {
+        // If plain text response (no context/evidence), don't add "Direct Answer:" prefix
+        if (!response.context && response.evidence.length === 0) {
             contentHTML += `<p>${formattedAnswer}</p>`;
         } else {
             contentHTML += `<p><strong>Direct Answer:</strong> ${formattedAnswer}</p>`;
@@ -762,6 +762,7 @@ KEY VERIFIED CONNECTIONS YOU CAN DISCUSS:
 ${scrapedContext}`;
 
     try {
+        console.log('Calling OpenAI API...');
         const response = await fetch(OPENAI_CONFIG.baseUrl, {
             method: 'POST',
             headers: {
@@ -779,12 +780,17 @@ ${scrapedContext}`;
             })
         });
 
+        console.log('OpenAI response status:', response.status);
+
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
+            console.error('OpenAI error data:', errorData);
             throw new Error(errorData.error?.message || `OpenAI API error: ${response.status}`);
         }
 
         const data = await response.json();
+        console.log('OpenAI response received:', data);
+        
         // Remove emojis from response
         let cleanContent = data.choices[0].message.content.replace(/[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]|[\u{1F900}-\u{1F9FF}]|[\u{1FA00}-\u{1FA6F}]|[\u{1FA70}-\u{1FAFF}]/gu, '');
         return {
@@ -797,9 +803,9 @@ ${scrapedContext}`;
         console.error('OpenAI API error:', error);
         return {
             directAnswer: `Error connecting to OpenAI: ${error.message}`,
-            context: 'Make sure your API key is valid and you have credits available.',
+            context: 'Make sure your API key is valid and you have credits available. Also ensure you are running this from a web server (not file://).',
             evidence: [],
-            closing: 'Check the console for more details.'
+            closing: 'Check the browser console (F12) for more details.'
         };
     }
 }
@@ -1180,9 +1186,6 @@ async function handleSendMessage(inputElement) {
     // Add to recent searches in sidebar
     addRecentSearch(message);
     
-    // Update context drawer with relevant info
-    updateContextDrawer(message);
-    
     // Add user message
     const userMessageEl = createUserMessage(message);
     chatMessages.appendChild(userMessageEl);
@@ -1210,6 +1213,9 @@ async function handleSendMessage(inputElement) {
     const aiMessageEl = createAIMessage(response);
     chatMessages.appendChild(aiMessageEl);
     scrollToBottom();
+    
+    // Update context drawer based on AI response content
+    updateContextDrawerFromResponse(response.directAnswer || '');
 }
 
 /**
@@ -1282,9 +1288,10 @@ function addRecentSearch(query) {
 }
 
 /**
- * Update context drawer with relevant information based on the query
+ * Update context drawer based on AI response content
+ * Only shows documents, people, and themes that are actually mentioned in the response
  */
-function updateContextDrawer(query) {
+function updateContextDrawerFromResponse(responseText) {
     const drawer = document.getElementById('contextDrawer');
     const toggleBtn = document.getElementById('toggleDrawer');
     const sourceList = document.getElementById('sourceList');
@@ -1298,90 +1305,97 @@ function updateContextDrawer(query) {
     relatedPeopleList.innerHTML = '';
     keyThemesList.innerHTML = '';
     
-    const queryLower = query.toLowerCase();
+    const responseLower = responseText.toLowerCase();
     
     // Track if we found any relevant content
     let hasRelevantContent = false;
     
-    // Find relevant documents from our data
-    if (scrapedJudaismData && scrapedJudaismData.documents) {
-        let relevantDocs = [];
-        let relevantPeople = new Set();
-        let relevantThemes = new Set();
-        
-        // Search through documents for matches
-        scrapedJudaismData.documents.forEach(doc => {
-            const docContent = doc.content.join(' ').toLowerCase();
-            if (docContent.includes(queryLower) || 
-                queryLower.split(' ').some(word => word.length > 3 && docContent.includes(word))) {
-                relevantDocs.push(doc);
-            }
+    // Extract document IDs mentioned in the response (e.g., EFTA00090314, EFTA02722642)
+    const docIdPattern = /EFTA\d{8}/gi;
+    const mentionedDocIds = responseText.match(docIdPattern) || [];
+    const uniqueDocIds = [...new Set(mentionedDocIds.map(id => id.toUpperCase()))];
+    
+    // Find and display mentioned documents
+    if (uniqueDocIds.length > 0 && scrapedJudaismData && scrapedJudaismData.documents) {
+        hasRelevantContent = true;
+        uniqueDocIds.forEach(docId => {
+            const doc = scrapedJudaismData.documents.find(d => d.id === docId);
+            const li = document.createElement('li');
+            li.className = 'source-item';
+            li.innerHTML = `
+                <span class="source-type">${doc?.type || 'Document'}</span>
+                <span class="source-name">${docId}</span>
+                <span class="source-date">Referenced in response</span>
+            `;
+            sourceList.appendChild(li);
         });
-        
-        // Only show documents if we found matches - NO fallback to defaults
-        if (relevantDocs.length > 0) {
-            hasRelevantContent = true;
-            relevantDocs.slice(0, 5).forEach(doc => {
-                const li = document.createElement('li');
-                li.className = 'source-item';
-                li.innerHTML = `
-                    <span class="source-type">${doc.type || 'Document'}</span>
-                    <span class="source-name">${doc.id}</span>
-                    <span class="source-date">${doc.matches || 1} match(es)</span>
-                `;
-                sourceList.appendChild(li);
-            });
-        }
-        
-        // Find relevant people - only if they match the query
-        if (scrapedJudaismData.summary && scrapedJudaismData.summary.namedIndividuals) {
-            scrapedJudaismData.summary.namedIndividuals.forEach(person => {
-                if (queryLower.includes(person.toLowerCase()) || 
-                    queryLower.split(' ').some(word => word.length > 3 && person.toLowerCase().includes(word))) {
-                    relevantPeople.add(person);
-                }
-            });
-        }
-        
-        // Only add people if we found matches - NO fallback to defaults
-        if (relevantPeople.size > 0) {
-            hasRelevantContent = true;
-            Array.from(relevantPeople).slice(0, 5).forEach(person => {
-                const li = document.createElement('li');
-                li.className = 'related-item';
-                const initials = person.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-                li.innerHTML = `
-                    <div class="related-avatar">${initials}</div>
-                    <div class="related-info">
-                        <span class="related-name">${escapeHtml(person)}</span>
-                        <span class="related-role">In Epstein documents</span>
-                    </div>
-                `;
-                relatedPeopleList.appendChild(li);
-            });
-        }
-        
-        // Find relevant themes - only if they match the query
-        if (scrapedJudaismData.summary && scrapedJudaismData.summary.keyThemes) {
-            scrapedJudaismData.summary.keyThemes.forEach(theme => {
-                if (queryLower.split(' ').some(word => word.length > 3 && theme.toLowerCase().includes(word))) {
-                    relevantThemes.add(theme);
-                }
-            });
-        }
-        
-        // Only add themes if we found matches - NO fallback to defaults
-        if (relevantThemes.size > 0) {
-            hasRelevantContent = true;
-            Array.from(relevantThemes).slice(0, 5).forEach(theme => {
-                const li = document.createElement('li');
-                li.className = 'event-item';
-                li.innerHTML = `
-                    <span class="event-name">${escapeHtml(theme)}</span>
-                `;
-                keyThemesList.appendChild(li);
-            });
-        }
+    }
+    
+    // List of known people to check for in response
+    const knownPeople = [
+        'Woody Allen', 'Elisabeth Maxwell', 'Ghislaine Maxwell', 'Jeffrey Epstein',
+        'Ivanka Trump', 'Jared Kushner', 'Sheldon Adelson', 'Michael Steinhardt',
+        'Donald Trump', 'Bill Clinton', 'Prince Andrew', 'Alan Dershowitz',
+        'Les Wexner', 'Jean-Luc Brunel', 'Virginia Giuffre', 'Dr Ting',
+        'Elliott Broidy', 'George Nader', 'Ehud Barak', 'Leon Black',
+        'Bill Gates', 'Elon Musk', 'Mark Zuckerberg', 'Reid Hoffman'
+    ];
+    
+    // Find people mentioned in the response
+    const mentionedPeople = knownPeople.filter(person => 
+        responseLower.includes(person.toLowerCase())
+    );
+    
+    if (mentionedPeople.length > 0) {
+        hasRelevantContent = true;
+        mentionedPeople.slice(0, 6).forEach(person => {
+            const li = document.createElement('li');
+            li.className = 'related-item';
+            const initials = person.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+            li.innerHTML = `
+                <div class="related-avatar">${initials}</div>
+                <div class="related-info">
+                    <span class="related-name">${escapeHtml(person)}</span>
+                    <span class="related-role">Mentioned in response</span>
+                </div>
+            `;
+            relatedPeopleList.appendChild(li);
+        });
+    }
+    
+    // List of key themes/topics to check for
+    const knownThemes = [
+        { keyword: 'chabad', display: 'Chabad organization' },
+        { keyword: 'conversion', display: 'Conversion to Judaism' },
+        { keyword: 'island', display: 'Little St. James Island' },
+        { keyword: 'flight log', display: 'Flight logs' },
+        { keyword: 'lolita express', display: 'Lolita Express' },
+        { keyword: 'philanthrop', display: 'Jewish philanthropy' },
+        { keyword: 'mossad', display: 'Mossad connections' },
+        { keyword: 'blackmail', display: 'Blackmail allegations' },
+        { keyword: 'trafficking', display: 'Sex trafficking' },
+        { keyword: 'rabbi', display: 'Religious figures' },
+        { keyword: 'synagogue', display: 'Religious institutions' },
+        { keyword: 'israel', display: 'Israel connections' },
+        { keyword: 'putin', display: 'Russia/Putin connections' },
+        { keyword: 'oligarch', display: 'Oligarch connections' }
+    ];
+    
+    // Find themes mentioned in the response
+    const mentionedThemes = knownThemes.filter(theme => 
+        responseLower.includes(theme.keyword)
+    );
+    
+    if (mentionedThemes.length > 0) {
+        hasRelevantContent = true;
+        mentionedThemes.slice(0, 5).forEach(theme => {
+            const li = document.createElement('li');
+            li.className = 'event-item';
+            li.innerHTML = `
+                <span class="event-name">${escapeHtml(theme.display)}</span>
+            `;
+            keyThemesList.appendChild(li);
+        });
     }
     
     // Only show drawer if we have relevant content to display
