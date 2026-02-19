@@ -719,7 +719,7 @@ ${scrapedContext}`;
                     { role: 'system', content: systemPrompt },
                     { role: 'user', content: userMessage }
                 ],
-                max_tokens: 1000,
+                max_tokens: 50,
                 temperature: 0.7
             })
         });
@@ -730,8 +730,15 @@ ${scrapedContext}`;
         }
 
         const data = await response.json();
+        // Remove emojis from response
+        let cleanContent = data.choices[0].message.content.replace(/[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]|[\u{1F900}-\u{1F9FF}]|[\u{1FA00}-\u{1FA6F}]|[\u{1FA70}-\u{1FAFF}]/gu, '');
+        // Limit to 15 words
+        const words = cleanContent.split(/\s+/);
+        if (words.length > 15) {
+            cleanContent = words.slice(0, 15).join(' ') + '...';
+        }
         return {
-            directAnswer: data.choices[0].message.content,
+            directAnswer: cleanContent,
             context: null,
             evidence: [],
             closing: null

@@ -12,6 +12,91 @@
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/chat.css">
+    <style>
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .spinning-star {
+            animation: spin 10s linear infinite;
+        }
+        .welcome-logo {
+            margin-bottom: 35px;
+        }
+        .chat-header-logo {
+            display: flex;
+            justify-content: center;
+            padding: 20px 0;
+        }
+        .chat-header-logo img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+        
+        /* Audio Player Styles */
+        .audio-player-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+        .audio-embed-wrapper {
+            width: 280px;
+            height: 80px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            background: #fff;
+            position: relative;
+        }
+        .audio-embed-wrapper iframe {
+            width: 600px;
+            height: 204px;
+            border: none;
+            transform: scale(0.47);
+            transform-origin: top left;
+        }
+        .mute-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--color-primary-600);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 56, 184, 0.3);
+            transition: all 0.2s ease;
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            z-index: 10;
+        }
+        .mute-btn:hover {
+            background-color: var(--color-primary-500);
+            transform: scale(1.05);
+        }
+        .mute-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+        .mute-btn .icon-muted {
+            display: none;
+        }
+        .mute-btn.muted .icon-unmuted {
+            display: none;
+        }
+        .mute-btn.muted .icon-muted {
+            display: block;
+        }
+    </style>
 </head>
 <body>
     <div class="app-container">
@@ -78,13 +163,11 @@
                     <div class="welcome-content">
                         <!-- Logo Icon -->
                         <div class="welcome-logo">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
-                            </svg>
+                            <img src="Images/David Flag.png" alt="Star of David" class="spinning-star" style="width: 80px; height: 80px; object-fit: contain;">
                         </div>
                         
                         <!-- Heading -->
-                        <h1 class="welcome-heading">Ask me a question about how the Jews are related to the Epstein files</h1>
+                        <h1 class="welcome-heading" style="margin-top: 25px;">Explore Jewish connections in the Epstein files</h1>
                         
                         <!-- Input Area -->
                         <div class="welcome-input-container">
@@ -160,6 +243,10 @@
 
                 <!-- Chat Messages (hidden initially, shown after first message) -->
                 <div class="chat-messages hidden" id="chatMessages">
+                    <!-- Spinning star header for chat -->
+                    <div class="chat-header-logo">
+                        <img src="Images/David Flag.png" alt="Star of David" class="spinning-star">
+                    </div>
                 </div>
 
                 <!-- Chat Input Area (shown when in chat mode) -->
@@ -233,6 +320,47 @@
         </button>
     </div>
 
+    <!-- Audio Player with Mute Button -->
+    <div class="audio-player-container">
+        <div class="audio-embed-wrapper">
+            <button class="mute-btn" id="muteBtn" aria-label="Mute/Unmute audio">
+                <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15.536 8.464a5 5 0 010 7.072M18.364 5.636a9 9 0 010 12.728M11 5L6 9H2v6h4l5 4V5z"/>
+                </svg>
+                <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/>
+                </svg>
+            </button>
+            <iframe id="audioFrame" src="https://audio.com/embed/audio/1830616681604509?theme=image" allow="autoplay"></iframe>
+        </div>
+    </div>
+
     <script src="js/app.js"></script>
+    <script>
+        (function() {
+            const muteBtn = document.getElementById('muteBtn');
+            const audioFrame = document.getElementById('audioFrame');
+            let isMuted = false;
+            const audioSrc = 'https://audio.com/embed/audio/1830616681604509?theme=image';
+            
+            muteBtn.addEventListener('click', function() {
+                isMuted = !isMuted;
+                muteBtn.classList.toggle('muted', isMuted);
+                
+                if (isMuted) {
+                    audioFrame.src = 'about:blank';
+                } else {
+                    audioFrame.src = audioSrc;
+                }
+            });
+            
+            // Loop by reloading iframe every 3 minutes (approximate song length)
+            setInterval(function() {
+                if (!isMuted && audioFrame.src.includes('audio.com')) {
+                    audioFrame.src = audioSrc;
+                }
+            }, 180000);
+        })();
+    </script>
 </body>
 </html>

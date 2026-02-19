@@ -121,8 +121,8 @@
 }
 
 .chat-input-wrapper:focus-within {
-    border-color: var(--color-accent);
-    box-shadow: var(--shadow-md), 0 0 0 3px rgba(92, 122, 153, 0.1);
+    border-color: var(--color-divider);
+    box-shadow: var(--shadow-input);
 }
 
 /* Attach Button (plus icon) */
@@ -154,6 +154,11 @@
     font-size: var(--text-base);
     color: var(--color-text-primary);
     line-height: 44px;
+    outline: none;
+}
+
+.chat-input:focus {
+    outline: none;
 }
 
 .chat-input::placeholder {

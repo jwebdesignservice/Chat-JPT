@@ -4,14 +4,14 @@
 
 :root {
     /* ===== PRIMARY COLORS ===== */
-    /* Deep Archival Blue - Headers, primary actions, AI message tint */
-    --color-primary-900: #0F1E2F;
-    --color-primary-800: #152A40;
-    --color-primary-700: #1A3550;
-    --color-primary-600: #1E3A5F;  /* Main primary */
-    --color-primary-500: #264A73;
-    --color-primary-400: #3A5F8A;
-    --color-primary-300: #5C7A99;  /* Muted steel blue */
+    /* Israeli Flag Blue - Headers, primary actions, AI message tint */
+    --color-primary-900: #001A52;
+    --color-primary-800: #002470;
+    --color-primary-700: #002E8A;
+    --color-primary-600: #0038B8;  /* Main primary - Star of David blue */
+    --color-primary-500: #0044D4;
+    --color-primary-400: #2660E0;
+    --color-primary-300: #5C8AE6;  /* Lighter blue */
     
     /* Soft White Background - Main canvas, content areas */
     --color-background: #F7F9FC;
@@ -19,10 +19,10 @@
     --color-surface-elevated: #FFFFFF;
     
     /* ===== SECONDARY/ACCENT COLORS ===== */
-    /* Muted Steel Blue - Buttons, interactive elements */
-    --color-accent: #5C7A99;
-    --color-accent-hover: #4A6A8A;
-    --color-accent-active: #3D5B7A;
+    /* Israeli Blue - Buttons, interactive elements */
+    --color-accent: #0038B8;
+    --color-accent-hover: #002E8A;
+    --color-accent-active: #002470;
     
     /* Light Grey Panels - Structural elements, cards, dividers */
     --color-panel: #E8ECF0;
