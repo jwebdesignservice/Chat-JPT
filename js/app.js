@@ -32,12 +32,10 @@ let dataLoaded = false;
 // OPENAI API CONFIGURATION
 // ===========================================
 const OPENAI_CONFIG = {
-    // OpenAI API endpoint
-    baseUrl: 'https://api.openai.com/v1/chat/completions',
+    // Use Netlify serverless function to proxy API calls (keeps API key secure)
+    baseUrl: '/.netlify/functions/openai',
     // Model to use (gpt-3.5-turbo is fast and cheap, gpt-4 is more capable)
     model: 'gpt-3.5-turbo',
-    // Your OpenAI API key - Set this to your key locally (do not commit to git)
-    apiKey: 'YOUR_API_KEY_HERE',
     // Set to true to use OpenAI, false for demo mode
     useOpenAI: true
 };
@@ -779,8 +777,7 @@ ${scrapedContext}`;
         const response = await fetch(OPENAI_CONFIG.baseUrl, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${OPENAI_CONFIG.apiKey}`
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 model: OPENAI_CONFIG.model,
