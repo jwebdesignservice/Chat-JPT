@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat JPT</title>
+    <title>ChatJPT</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -46,9 +46,9 @@
         .preloader-text {
             margin-top: 40px;
             font-family: 'Inter', sans-serif;
-            font-size: 32px;
-            font-weight: 600;
-            color: #0038B8;
+            font-size: 26px;
+            font-weight: 500;
+            color: #1A2332;
             letter-spacing: -0.01em;
             opacity: 0;
             animation: fade-in-text 0.8s ease forwards;
@@ -104,6 +104,122 @@
         }
         .welcome-logo {
             margin-bottom: 35px;
+        }
+        
+        /* Sidebar Header */
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: var(--space-3) var(--space-4);
+        }
+        
+        /* Brand Selector */
+        .brand-selector {
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+            padding: var(--space-2) var(--space-3);
+            background: transparent;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        .brand-selector:hover {
+            background-color: var(--color-panel);
+        }
+        .brand-name {
+            font-size: var(--text-base);
+            font-weight: var(--font-semibold);
+            color: var(--color-text-primary);
+        }
+        .brand-dropdown-icon {
+            width: 16px;
+            height: 16px;
+            color: var(--color-text-tertiary);
+        }
+        
+        /* Collapse Arrow - attached to right edge of sidebar */
+        .btn-collapse-arrow {
+            position: absolute;
+            right: -24px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 48px;
+            background-color: var(--color-surface);
+            border: var(--border-width) solid var(--color-divider);
+            border-left: none;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-text-tertiary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            z-index: 102;
+        }
+        .btn-collapse-arrow:hover {
+            background-color: var(--color-panel);
+            color: var(--color-text-primary);
+        }
+        .btn-collapse-arrow svg {
+            width: 14px;
+            height: 14px;
+        }
+        
+        /* Sidebar needs position relative for arrow */
+        .sidebar {
+            position: relative;
+        }
+        
+        /* Collapsed Sidebar State */
+        .sidebar.collapsed {
+            width: 0;
+            min-width: 0;
+            overflow: hidden;
+            border-right: none;
+        }
+        .sidebar.collapsed .sidebar-header,
+        .sidebar.collapsed .sidebar-nav,
+        .sidebar.collapsed .btn-collapse-arrow {
+            display: none;
+        }
+        
+        /* Top Bar - shown when sidebar is collapsed */
+        .top-bar {
+            position: fixed;
+            left: var(--space-3);
+            top: var(--space-3);
+            display: none;
+            align-items: center;
+            gap: var(--space-2);
+            z-index: 101;
+        }
+        .top-bar.visible {
+            display: flex;
+        }
+        .btn-expand-sidebar {
+            width: 36px;
+            height: 36px;
+            background-color: transparent;
+            border: none;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        .btn-expand-sidebar:hover {
+            background-color: var(--color-panel);
+            color: var(--color-text-primary);
+        }
+        .btn-expand-sidebar svg {
+            width: 20px;
+            height: 20px;
         }
         .chat-header-logo {
             display: flex;
@@ -169,15 +285,21 @@
     <!-- Preloader -->
     <div class="preloader" id="preloader">
         <img src="Images/David Flag.png" alt="Star of David" class="preloader-star">
-        <div class="preloader-text">Welcome To Chat JPT<span class="preloader-dots">...</span></div>
+        <div class="preloader-text">Welcome To ChatJPT<span class="preloader-dots">...</span></div>
     </div>
 
     <div class="app-container" id="appContainer">
         <!-- Left Sidebar - Navigation -->
-        <aside class="sidebar" id="sidebar">
+        <aside class="sidebar collapsed" id="sidebar">
             <div class="sidebar-header">
-                <h1 class="logo" id="logoText" style="cursor: pointer;">Chat JPT</h1>
+                <img src="Images/David Flag.png" alt="ChatJPT" class="sidebar-logo spinning-star" id="logoText" style="cursor: pointer; width: 32px; height: 32px;">
             </div>
+            <!-- Collapse arrow on right edge -->
+            <button class="btn-collapse-arrow" id="collapseSidebar" aria-label="Collapse sidebar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15 19l-7-7 7-7"/>
+                </svg>
+            </button>
             
             <nav class="sidebar-nav">
                 <div class="nav-section">
@@ -227,6 +349,18 @@
                 </div>
             </nav>
         </aside>
+
+        <!-- Top Bar (shown when sidebar collapsed) -->
+        <div class="top-bar visible" id="topBar">
+            <button class="btn-expand-sidebar" id="expandSidebar" aria-label="Expand sidebar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+            <button class="brand-selector" id="topBarLogo" style="cursor: pointer;">
+                <span class="brand-name">ChatJPT 5.2</span>
+            </button>
+        </div>
 
         <!-- Center Panel - Main Chat -->
         <main class="main-panel">
@@ -397,6 +531,7 @@
     <video id="bgMusic" loop style="display: none;">
         <source src="audio/hava-nagila.mp4" type="video/mp4">
     </video>
+    <script>document.getElementById('bgMusic').volume = 0.15;</script>
 
     <!-- Audio Controls -->
     <div class="audio-controls">
@@ -418,7 +553,7 @@
         </button>
     </div>
 
-    <script src="js/app.js"></script>
+    <script src="js/app.js?v=2"></script>
     <script>
         (function() {
             // Preloader Logic
@@ -497,6 +632,30 @@
             muteBtn.addEventListener('click', function() {
                 bgMusic.muted = !bgMusic.muted;
                 muteBtn.classList.toggle('muted', bgMusic.muted);
+            });
+            
+            // Sidebar collapse/expand
+            const sidebar = document.getElementById('sidebar');
+            const collapseSidebar = document.getElementById('collapseSidebar');
+            const expandSidebar = document.getElementById('expandSidebar');
+            const topBar = document.getElementById('topBar');
+            const topBarLogo = document.getElementById('topBarLogo');
+            
+            collapseSidebar.addEventListener('click', function() {
+                sidebar.classList.add('collapsed');
+                topBar.classList.add('visible');
+            });
+            
+            expandSidebar.addEventListener('click', function() {
+                sidebar.classList.remove('collapsed');
+                topBar.classList.remove('visible');
+            });
+            
+            // Top bar logo click - go to home
+            topBarLogo.addEventListener('click', function() {
+                if (window.resetToHome) {
+                    window.resetToHome();
+                }
             });
         })();
     </script>
