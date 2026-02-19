@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLM4 Web Scraper</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #00d4ff;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #888;
+            margin-bottom: 30px;
+        }
+        .status-bar {
+            background: #252542;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ff4444;
+        }
+        .status-dot.online {
+            background: #44ff44;
+        }
+        .panel {
+            background: #252542;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .panel h2 {
+            color: #00d4ff;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            color: #aaa;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #3a3a5c;
+            border-radius: 8px;
+            background: #1a1a2e;
+            color: #eee;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+        textarea {
+            min-height: 200px;
+            font-family: 'Consolas', monospace;
+            resize: vertical;
+        }
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: #00d4ff;
+            color: #1a1a2e;
+            font-weight: 600;
+        }
+        .btn-primary:hover {
+            background: #00b8e6;
+        }
+        .btn-primary:disabled {
+            background: #555;
+            cursor: not-allowed;
+        }
+        .btn-secondary {
+            background: #3a3a5c;
+            color: #eee;
+        }
+        .btn-danger {
+            background: #ff4444;
+            color: #fff;
+        }
+        .results {
+            background: #1a1a2e;
+            border: 1px solid #3a3a5c;
+            border-radius: 8px;
+            padding: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+        }
+        .scraped-items {
+            display: grid;
+            gap: 10px;
+        }
+        .scraped-item {
+            background: #1a1a2e;
+            border: 1px solid #3a3a5c;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        .scraped-item h4 {
+            color: #00d4ff;
+            margin-bottom: 10px;
+        }
+        .scraped-item p {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #fff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .hidden { display: none; }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+        .log-entry {
+            padding: 5px 0;
+            border-bottom: 1px solid #3a3a5c;
+        }
+        .log-entry.error { color: #ff6b6b; }
+        .log-entry.success { color: #69db7c; }
+        .log-entry.info { color: #74c0fc; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>GLM4 Content Scraper</h1>
+        <p class="subtitle">Extract and process content using your local uncensored AI</p>
+
+        <div class="status-bar">
+            <div class="status-indicator">
+                <div class="status-dot" id="ollamaStatus"></div>
+                <span id="ollamaStatusText">Checking Ollama...</span>
+            </div>
+            <div class="status-indicator">
+                <span>Model: <strong id="modelName">glm4</strong></span>
+            </div>
+            <div class="status-indicator">
+                <span>Scraped Items: <strong id="itemCount">0</strong></span>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="panel">
+                <h2>1. Input Content</h2>
+                
+                <label for="contentSource">Content Source</label>
+                <select id="contentSource">
+                    <option value="paste">Paste HTML/Text directly</option>
+                    <option value="url">Fetch from URL (may have CORS issues)</option>
+                </select>
+
+                <div id="urlInput" class="hidden">
+                    <label for="sourceUrl">URL to Scrape</label>
+                    <input type="url" id="sourceUrl" placeholder="https://example.com/page">
+                    <button class="btn-secondary" onclick="fetchUrl()">Fetch Page</button>
+                </div>
+
+                <label for="rawContent">Raw Content (paste HTML or text)</label>
+                <textarea id="rawContent" placeholder="Paste the page content here..."></textarea>
+
+                <label for="extractionPrompt">Extraction Instructions</label>
+                <textarea id="extractionPrompt" style="min-height: 100px;">Extract all relevant information from this content. Structure your response as JSON with the following format:
+{
+  "title": "Main title or subject",
+  "summary": "Brief summary of the content",
+  "key_facts": ["fact 1", "fact 2", ...],
+  "people": ["name 1", "name 2", ...],
+  "dates": ["date 1", "date 2", ...],
+  "locations": ["location 1", ...],
+  "raw_text": "The main text content cleaned up"
+}</textarea>
+
+                <div class="actions">
+                    <button class="btn-primary" id="extractBtn" onclick="extractContent()">
+                        Extract with GLM4
+                    </button>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h2>2. Extraction Results</h2>
+                <div class="results" id="results">
+                    Results will appear here after extraction...
+                </div>
+                <div class="actions">
+                    <button class="btn-secondary" onclick="saveToArchive()" id="saveBtn" disabled>
+                        Save to Archive
+                    </button>
+                    <button class="btn-secondary" onclick="copyResults()">
+                        Copy JSON
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2>3. Saved Archive</h2>
+            <p style="color: #888; margin-bottom: 15px;">
+                Saved items are stored in localStorage and exported to JSON for your chat interface.
+            </p>
+            <div class="scraped-items" id="scrapedItems">
+                <p style="color: #666;">No items scraped yet.</p>
+            </div>
+            <div class="actions">
+                <button class="btn-primary" onclick="exportArchive()">Export as JSON</button>
+                <button class="btn-danger" onclick="clearArchive()">Clear All</button>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2>Activity Log</h2>
+            <div class="results" id="logOutput" style="max-height: 200px;"></div>
+        </div>
+    </div>
+
+    <script>
+        const OLLAMA_URL = 'http://localhost:11434';
+        const MODEL = 'glm4';
+        let lastExtraction = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            checkOllamaStatus();
+            loadArchive();
+            
+            document.getElementById('contentSource').addEventListener('change', (e) => {
+                document.getElementById('urlInput').classList.toggle('hidden', e.target.value !== 'url');
+            });
+        });
+
+        function log(message, type = 'info') {
+            const logEl = document.getElementById('logOutput');
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logEl.insertBefore(entry, logEl.firstChild);
+        }
+
+        async function checkOllamaStatus() {
+            try {
+                const response = await fetch(OLLAMA_URL);
+                if (response.ok) {
+                    document.getElementById('ollamaStatus').classList.add('online');
+                    document.getElementById('ollamaStatusText').textContent = 'Ollama Online';
+                    log('Connected to Ollama', 'success');
+                }
+            } catch (error) {
+                document.getElementById('ollamaStatusText').textContent = 'Ollama Offline';
+                log('Cannot connect to Ollama. Make sure "ollama serve" is running.', 'error');
+            }
+        }
+
+        async function fetchUrl() {
+            const url = document.getElementById('sourceUrl').value;
+            if (!url) return;
+
+            log(`Fetching URL: ${url}`);
+            try {
+                // Note: This will likely fail due to CORS unless you use a proxy
+                const response = await fetch(url);
+                const html = await response.text();
+                document.getElementById('rawContent').value = html;
+                log('Page fetched successfully', 'success');
+            } catch (error) {
+                log(`CORS error - copy/paste the page content manually instead`, 'error');
+            }
+        }
+
+        async function extractContent() {
+            const content = document.getElementById('rawContent').value;
+            const prompt = document.getElementById('extractionPrompt').value;
+            
+            if (!content) {
+                log('Please paste content first', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('extractBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span>Extracting...';
+            
+            log('Sending to GLM4 for extraction...');
+            document.getElementById('results').textContent = 'Processing with GLM4... This may take 30-60 seconds.';
+
+            try {
+                const response = await fetch(`${OLLAMA_URL}/api/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: MODEL,
+                        messages: [
+                            {
+                                role: 'system',
+                                content: 'You are a data extraction assistant. Extract information exactly as requested and return valid JSON only. No explanations, just JSON.'
+                            },
+                            {
+                                role: 'user',
+                                content: `${prompt}\n\n---\n\nCONTENT TO EXTRACT FROM:\n\n${content}`
+                            }
+                        ],
+                        stream: false
+                    })
+                });
+
+                const data = await response.json();
+                const result = data.message.content;
+                
+                document.getElementById('results').textContent = result;
+                log('Extraction complete!', 'success');
+                
+                // Try to parse as JSON
+                try {
+                    lastExtraction = JSON.parse(result);
+                    document.getElementById('saveBtn').disabled = false;
+                } catch {
+                    // Try to extract JSON from the response
+                    const jsonMatch = result.match(/\{[\s\S]*\}/);
+                    if (jsonMatch) {
+                        lastExtraction = JSON.parse(jsonMatch[0]);
+                        document.getElementById('saveBtn').disabled = false;
+                    } else {
+                        lastExtraction = { raw_text: result };
+                        document.getElementById('saveBtn').disabled = false;
+                    }
+                }
+            } catch (error) {
+                log(`Error: ${error.message}`, 'error');
+                document.getElementById('results').textContent = `Error: ${error.message}`;
+            }
+
+            btn.disabled = false;
+            btn.textContent = 'Extract with GLM4';
+        }
+
+        function saveToArchive() {
+            if (!lastExtraction) return;
+
+            const archive = JSON.parse(localStorage.getItem('scraperArchive') || '[]');
+            const item = {
+                id: Date.now(),
+                timestamp: new Date().toISOString(),
+                ...lastExtraction
+            };
+            archive.push(item);
+            localStorage.setItem('scraperArchive', JSON.stringify(archive));
+            
+            log('Saved to archive', 'success');
+            loadArchive();
+            document.getElementById('saveBtn').disabled = true;
+        }
+
+        function loadArchive() {
+            const archive = JSON.parse(localStorage.getItem('scraperArchive') || '[]');
+            const container = document.getElementById('scrapedItems');
+            document.getElementById('itemCount').textContent = archive.length;
+
+            if (archive.length === 0) {
+                container.innerHTML = '<p style="color: #666;">No items scraped yet.</p>';
+                return;
+            }
+
+            container.innerHTML = archive.map(item => `
+                <div class="scraped-item">
+                    <h4>${item.title || 'Untitled'}</h4>
+                    <p>${item.summary || item.raw_text?.substring(0, 200) || 'No summary'}...</p>
+                    <small style="color: #666;">${new Date(item.timestamp).toLocaleString()}</small>
+                    <button class="btn-secondary" style="margin-top: 10px; padding: 5px 10px; font-size: 0.8rem;" onclick="deleteItem(${item.id})">Delete</button>
+                </div>
+            `).join('');
+        }
+
+        function deleteItem(id) {
+            let archive = JSON.parse(localStorage.getItem('scraperArchive') || '[]');
+            archive = archive.filter(item => item.id !== id);
+            localStorage.setItem('scraperArchive', JSON.stringify(archive));
+            loadArchive();
+            log('Item deleted', 'info');
+        }
+
+        function exportArchive() {
+            const archive = JSON.parse(localStorage.getItem('scraperArchive') || '[]');
+            const blob = new Blob([JSON.stringify(archive, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `scraped-data-${Date.now()}.json`;
+            a.click();
+            
+            log('Archive exported as JSON', 'success');
+        }
+
+        function clearArchive() {
+            if (confirm('Are you sure you want to delete all scraped items?')) {
+                localStorage.removeItem('scraperArchive');
+                loadArchive();
+                log('Archive cleared', 'info');
+            }
+        }
+
+        function copyResults() {
+            const results = document.getElementById('results').textContent;
+            navigator.clipboard.writeText(results);
+            log('Copied to clipboard', 'success');
+        }
+    </script>
+</body>
+</html>
