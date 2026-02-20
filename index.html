@@ -114,6 +114,33 @@
             padding: var(--space-3) var(--space-4);
         }
         
+        /* New Chat Button */
+        .btn-new-chat {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            width: calc(100% - var(--space-6));
+            margin: var(--space-3) var(--space-3);
+            padding: var(--space-3) var(--space-4);
+            background-color: var(--color-surface);
+            border: var(--border-width) solid var(--color-divider);
+            border-radius: var(--radius-lg);
+            color: var(--color-text-primary);
+            font-size: var(--text-sm);
+            font-weight: var(--font-medium);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        .btn-new-chat:hover {
+            background-color: var(--color-panel);
+            border-color: var(--color-primary-300);
+        }
+        .btn-new-chat svg {
+            width: 18px;
+            height: 18px;
+            color: var(--color-text-secondary);
+        }
+        
         /* Brand Selector */
         .brand-selector {
             display: flex;
@@ -279,6 +306,153 @@
         .audio-btn.muted .icon-muted {
             display: block;
         }
+        
+        /* Mobile/Tablet: Move audio controls to top right */
+        @media (max-width: 1024px) {
+            .audio-controls {
+                top: 16px;
+                right: 16px;
+                bottom: auto;
+            }
+            .audio-btn {
+                width: 40px;
+                height: 40px;
+            }
+            .audio-btn svg {
+                width: 18px;
+                height: 18px;
+            }
+        }
+        
+        /* Tablet Responsive (1024px and below) */
+        @media (max-width: 1024px) {
+            /* Right sidebar - overlay mode */
+            .context-drawer {
+                position: fixed;
+                right: 0;
+                top: 0;
+                height: 100vh;
+                transform: translateX(100%);
+                box-shadow: var(--shadow-lg);
+                z-index: 200;
+            }
+            .context-drawer:not(.hidden) {
+                transform: translateX(0);
+            }
+        }
+        
+        /* Mobile Responsive (768px and below) */
+        @media (max-width: 768px) {
+            /* Left sidebar - overlay mode */
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                height: 100vh;
+                width: 280px;
+                min-width: 280px;
+                transform: translateX(-100%);
+                box-shadow: var(--shadow-lg);
+                z-index: 200;
+                transition: transform 0.3s ease;
+            }
+            .sidebar:not(.collapsed) {
+                transform: translateX(0);
+            }
+            .sidebar.collapsed {
+                transform: translateX(-100%);
+                width: 280px;
+                min-width: 280px;
+            }
+            
+            /* Show sidebar content when open on mobile */
+            .sidebar:not(.collapsed) .sidebar-header,
+            .sidebar:not(.collapsed) .sidebar-nav,
+            .sidebar:not(.collapsed) .btn-collapse-arrow {
+                display: flex;
+            }
+            .sidebar:not(.collapsed) .sidebar-nav {
+                display: block;
+            }
+            
+            /* Hide collapse arrow on mobile - use overlay click instead */
+            .btn-collapse-arrow {
+                right: -36px;
+            }
+            
+            /* Top bar always visible on mobile */
+            .top-bar {
+                display: flex !important;
+                left: 12px;
+                top: 12px;
+            }
+            
+            /* Adjust main content */
+            .main-panel {
+                width: 100%;
+            }
+            
+            /* Welcome screen adjustments */
+            .welcome-content {
+                padding: 0 var(--space-4);
+            }
+            .welcome-heading {
+                font-size: var(--text-xl) !important;
+            }
+            .suggested-topics {
+                max-width: 100%;
+                padding: 0 var(--space-2);
+            }
+            .topic-chip {
+                flex-shrink: 0;
+            }
+            
+            /* Chat input adjustments */
+            .chat-input-wrapper {
+                padding: var(--space-2);
+            }
+            
+            /* Overlay when sidebar is open */
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 199;
+            }
+            .sidebar-overlay.visible {
+                display: block;
+            }
+        }
+        
+        /* Small mobile (480px and below) */
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 85vw;
+                min-width: 85vw;
+            }
+            .top-bar {
+                left: 8px;
+                top: 8px;
+            }
+            .brand-name {
+                font-size: var(--text-sm);
+            }
+            .welcome-heading {
+                font-size: var(--text-lg) !important;
+            }
+            .audio-controls {
+                top: 12px;
+                right: 12px;
+            }
+            .audio-btn {
+                width: 36px;
+                height: 36px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -289,6 +463,9 @@
     </div>
 
     <div class="app-container" id="appContainer">
+        <!-- Sidebar Overlay (for mobile) -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        
         <!-- Left Sidebar - Navigation -->
         <aside class="sidebar collapsed" id="sidebar">
             <div class="sidebar-header">
@@ -302,6 +479,14 @@
             </button>
             
             <nav class="sidebar-nav">
+                <!-- New Chat Button -->
+                <button class="btn-new-chat" id="newChatBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 4v16m8-8H4"/>
+                    </svg>
+                    <span>New Chat</span>
+                </button>
+                
                 <div class="nav-section">
                     <h2 class="nav-section-title">Case Sections</h2>
                     <ul class="nav-list">
@@ -343,7 +528,7 @@
                 </div>
                 
                 <div class="nav-section hidden" id="savedChatsSection">
-                    <h2 class="nav-section-title">Recent Searches</h2>
+                    <h2 class="nav-section-title">Chat History</h2>
                     <ul class="nav-list saved-chats" id="savedChatsList">
                     </ul>
                 </div>
@@ -640,21 +825,50 @@
             const expandSidebar = document.getElementById('expandSidebar');
             const topBar = document.getElementById('topBar');
             const topBarLogo = document.getElementById('topBarLogo');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
             
-            collapseSidebar.addEventListener('click', function() {
+            function closeSidebar() {
                 sidebar.classList.add('collapsed');
                 topBar.classList.add('visible');
-            });
+                if (sidebarOverlay) {
+                    sidebarOverlay.classList.remove('visible');
+                }
+            }
             
-            expandSidebar.addEventListener('click', function() {
+            function openSidebar() {
                 sidebar.classList.remove('collapsed');
-                topBar.classList.remove('visible');
-            });
+                // On mobile, keep top bar visible but show overlay
+                if (window.innerWidth <= 768) {
+                    if (sidebarOverlay) {
+                        sidebarOverlay.classList.add('visible');
+                    }
+                } else {
+                    topBar.classList.remove('visible');
+                }
+            }
+            
+            collapseSidebar.addEventListener('click', closeSidebar);
+            expandSidebar.addEventListener('click', openSidebar);
+            
+            // Close sidebar when clicking overlay (mobile)
+            if (sidebarOverlay) {
+                sidebarOverlay.addEventListener('click', closeSidebar);
+            }
             
             // Top bar logo click - go to home
             topBarLogo.addEventListener('click', function() {
                 if (window.resetToHome) {
                     window.resetToHome();
+                }
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    // Desktop: hide overlay
+                    if (sidebarOverlay) {
+                        sidebarOverlay.classList.remove('visible');
+                    }
                 }
             });
         })();

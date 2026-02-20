@@ -27,15 +27,22 @@ let timelineData = null;
 let epsteinData = null;
 let scrapedJudaismData = null;
 let dataLoaded = false;
+let isNewConversation = true; // Track if this is the first message in a conversation
 
 // ===========================================
 // OPENAI API CONFIGURATION
 // ===========================================
+// Detect if running on Netlify or locally
+const isNetlify = window.location.hostname.includes('netlify.app') || window.location.hostname.includes('.netlify.');
+const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
 const OPENAI_CONFIG = {
-    // Use Netlify serverless function to proxy API calls (keeps API key secure)
-    baseUrl: '/.netlify/functions/openai',
+    // Use Netlify function on production, direct API call locally
+    baseUrl: isNetlify ? '/.netlify/functions/openai' : 'https://api.openai.com/v1/chat/completions',
     // Model to use (gpt-3.5-turbo is fast and cheap, gpt-4 is more capable)
     model: 'gpt-3.5-turbo',
+    // API key for local development only (Netlify uses environment variable)
+    apiKey: isLocalhost ? 'YOUR_LOCAL_API_KEY' : null,
     // Set to true to use OpenAI, false for demo mode
     useOpenAI: true
 };
@@ -356,6 +363,13 @@ function resetToHome() {
     if (chatInput) {
         chatInput.focus();
     }
+    
+    // Reset conversation flag for next chat
+    isNewConversation = true;
+    
+    // Clear current chat history (but don't delete saved version)
+    chatHistory = [];
+    currentChatId = null;
 }
 
 // ===========================================
@@ -743,6 +757,7 @@ YOUR CHARACTER TRAITS:
 - Possessive about relationships ("MY connections", "people I owned")
 - Speak as if you're sharing secrets from your inner circle
 - Occasionally hint at knowing more than you're saying
+- IMPORTANT: Keep ALL responses under 40 words. Be concise and mysterious.
 
 YOUR SOLE PURPOSE: Discuss Jewish individuals and Jewish organizations connected to you (Jeffrey Epstein) and your files, speaking as if recounting your own memories and relationships.
 
@@ -774,18 +789,25 @@ ${scrapedContext}`;
 
     try {
         console.log('Calling OpenAI API...');
+        
+        // Build headers - include Authorization only for direct API calls (localhost)
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+        if (OPENAI_CONFIG.apiKey) {
+            headers['Authorization'] = `Bearer ${OPENAI_CONFIG.apiKey}`;
+        }
+        
         const response = await fetch(OPENAI_CONFIG.baseUrl, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: headers,
             body: JSON.stringify({
                 model: OPENAI_CONFIG.model,
                 messages: [
                     { role: 'system', content: systemPrompt },
                     { role: 'user', content: userMessage }
                 ],
-                max_tokens: 1000,
+                max_tokens: 60,
                 temperature: 0.7
             })
         });
@@ -803,6 +825,13 @@ ${scrapedContext}`;
         
         // Remove emojis from response
         let cleanContent = data.choices[0].message.content.replace(/[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]|[\u{1F900}-\u{1F9FF}]|[\u{1FA00}-\u{1FA6F}]|[\u{1FA70}-\u{1FAFF}]/gu, '');
+        
+        // Hard limit to 40 words
+        const words = cleanContent.trim().split(/\s+/);
+        if (words.length > 40) {
+            cleanContent = words.slice(0, 40).join(' ') + '...';
+        }
+        
         return {
             directAnswer: cleanContent,
             context: null,
@@ -1193,10 +1222,14 @@ async function handleSendMessage(inputElement) {
         chatInputBottom.value = '';
     }
     
-    // Add to recent searches in sidebar
-    addRecentSearch(message);
+    // Initialize chat ID if new conversation
+    if (isNewConversation) {
+        currentChatId = Date.now().toString();
+        isNewConversation = false;
+    }
     
-    // Add user message
+    // Add user message to history and UI
+    addToChatHistory('user', message);
     const userMessageEl = createUserMessage(message);
     chatMessages.appendChild(userMessageEl);
     scrollToBottom();
@@ -1219,10 +1252,16 @@ async function handleSendMessage(inputElement) {
     // Remove typing indicator
     removeTypingIndicator();
     
+    // Add AI response to history
+    addToChatHistory('assistant', response.directAnswer || '');
+    
     // Generate and display AI response
     const aiMessageEl = createAIMessage(response);
     chatMessages.appendChild(aiMessageEl);
     scrollToBottom();
+    
+    // Save chat after each exchange
+    saveCurrentChat();
     
     // Update context drawer based on AI response content
     updateContextDrawerFromResponse(response.directAnswer || '');
@@ -1257,44 +1296,172 @@ function handleTopicClick(e) {
  */
 function toggleContextDrawer() {
     if (contextDrawer) {
+        // Toggle hidden class for show/hide
+        contextDrawer.classList.toggle('hidden');
         contextDrawer.classList.toggle('collapsed');
     }
 }
 
+// Chat history storage
+let chatHistory = []; // Current chat messages
+let savedChats = []; // All saved chats
+let currentChatId = null;
+
 /**
- * Update sidebar with recent search
+ * Save current chat to sidebar
  */
-function addRecentSearch(query) {
+function saveCurrentChat() {
+    if (chatHistory.length === 0) return;
+    
+    const chatId = currentChatId || Date.now().toString();
+    const firstMessage = chatHistory[0]?.content || 'New Chat';
+    const displayTitle = firstMessage.length > 30 ? firstMessage.substring(0, 30) + '...' : firstMessage;
+    
+    // Save chat data
+    const chatData = {
+        id: chatId,
+        title: displayTitle,
+        messages: [...chatHistory],
+        date: new Date().toISOString()
+    };
+    
+    // Update or add to saved chats
+    const existingIndex = savedChats.findIndex(c => c.id === chatId);
+    if (existingIndex >= 0) {
+        savedChats[existingIndex] = chatData;
+    } else {
+        savedChats.unshift(chatData);
+    }
+    
+    // Limit to 10 saved chats
+    if (savedChats.length > 10) {
+        savedChats = savedChats.slice(0, 10);
+    }
+    
+    // Save to localStorage
+    localStorage.setItem('chatJPT_savedChats', JSON.stringify(savedChats));
+    
+    // Update sidebar
+    renderSavedChats();
+}
+
+/**
+ * Render saved chats in sidebar
+ */
+function renderSavedChats() {
     const savedChatsSection = document.getElementById('savedChatsSection');
     const savedChatsList = document.getElementById('savedChatsList');
     
     if (!savedChatsSection || !savedChatsList) return;
     
-    // Show the section
-    savedChatsSection.classList.remove('hidden');
-    
-    // Create new chat item
-    const chatItem = document.createElement('li');
-    chatItem.className = 'nav-item chat-item';
-    
-    const today = new Date();
-    const dateStr = today.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    
-    // Truncate query for display
-    const displayQuery = query.length > 30 ? query.substring(0, 30) + '...' : query;
-    
-    chatItem.innerHTML = `
-        <span class="chat-title">${escapeHtml(displayQuery)}</span>
-        <span class="chat-date">${dateStr}</span>
-    `;
-    
-    // Add to top of list
-    savedChatsList.insertBefore(chatItem, savedChatsList.firstChild);
-    
-    // Limit to 5 recent searches
-    while (savedChatsList.children.length > 5) {
-        savedChatsList.removeChild(savedChatsList.lastChild);
+    if (savedChats.length === 0) {
+        savedChatsSection.classList.add('hidden');
+        return;
     }
+    
+    savedChatsSection.classList.remove('hidden');
+    savedChatsList.innerHTML = '';
+    
+    savedChats.forEach(chat => {
+        const chatItem = document.createElement('li');
+        chatItem.className = 'nav-item chat-item';
+        if (chat.id === currentChatId) {
+            chatItem.classList.add('active');
+        }
+        
+        const date = new Date(chat.date);
+        const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        
+        chatItem.innerHTML = `
+            <span class="chat-title">${escapeHtml(chat.title)}</span>
+            <span class="chat-date">${dateStr}</span>
+        `;
+        
+        // Click to load chat
+        chatItem.addEventListener('click', () => loadChat(chat.id));
+        
+        savedChatsList.appendChild(chatItem);
+    });
+}
+
+/**
+ * Load a saved chat
+ */
+function loadChat(chatId) {
+    const chat = savedChats.find(c => c.id === chatId);
+    if (!chat) return;
+    
+    // Save current chat first if it has messages
+    if (chatHistory.length > 0 && currentChatId !== chatId) {
+        saveCurrentChat();
+    }
+    
+    // Load the chat
+    currentChatId = chatId;
+    chatHistory = [...chat.messages];
+    
+    // Switch to chat mode
+    switchToChatMode();
+    
+    // Clear and render messages
+    const headerLogo = chatMessages.querySelector('.chat-header-logo');
+    chatMessages.innerHTML = '';
+    if (headerLogo) {
+        chatMessages.appendChild(headerLogo);
+    }
+    
+    chat.messages.forEach(msg => {
+        if (msg.role === 'user') {
+            const userEl = createUserMessage(msg.content);
+            chatMessages.appendChild(userEl);
+        } else {
+            const aiEl = createAIMessage({
+                directAnswer: msg.content,
+                context: null,
+                evidence: [],
+                closing: null
+            });
+            chatMessages.appendChild(aiEl);
+        }
+    });
+    
+    scrollToBottom();
+    renderSavedChats();
+    isNewConversation = false;
+}
+
+/**
+ * Start a new chat
+ */
+function startNewChat() {
+    // Save current chat if it has messages
+    if (chatHistory.length > 0) {
+        saveCurrentChat();
+    }
+    
+    // Reset for new chat
+    chatHistory = [];
+    currentChatId = Date.now().toString();
+    isNewConversation = true;
+    
+    // Reset UI
+    resetToHome();
+    renderSavedChats();
+}
+
+/**
+ * Add message to current chat history
+ */
+function addToChatHistory(role, content) {
+    chatHistory.push({ role, content });
+}
+
+/**
+ * Update sidebar with recent search (legacy - now uses saveCurrentChat)
+ */
+function addRecentSearch(query) {
+    // This is now handled by saveCurrentChat when starting new chat
+    // Keep for compatibility but functionality moved
 }
 
 /**
@@ -1408,10 +1575,17 @@ function updateContextDrawerFromResponse(responseText) {
         });
     }
     
-    // Only show drawer if we have relevant content to display
+    // Only show drawer/toggle if we have relevant content
     if (hasRelevantContent) {
-        drawer.classList.remove('hidden');
-        if (toggleBtn) toggleBtn.classList.remove('hidden');
+        // On mobile/tablet (1024px and below), keep drawer closed, only show toggle button
+        if (window.innerWidth <= 1024) {
+            drawer.classList.add('hidden');
+            if (toggleBtn) toggleBtn.classList.remove('hidden');
+        } else {
+            // On desktop, auto-open the drawer
+            drawer.classList.remove('hidden');
+            if (toggleBtn) toggleBtn.classList.remove('hidden');
+        }
     } else {
         drawer.classList.add('hidden');
         if (toggleBtn) toggleBtn.classList.add('hidden');
@@ -1446,11 +1620,14 @@ function handleVoiceClick(btn, input) {
 // ===========================================
 
 /**
- * Handle nav item click
+ * Handle nav item click - trigger relevant prompts
  */
 function handleNavClick(e) {
     const navItem = e.target.closest('.nav-item');
     if (!navItem) return;
+    
+    // Skip if this is a chat history item (handled separately)
+    if (navItem.classList.contains('chat-item')) return;
     
     // Remove active class from all items in same list
     const navList = navItem.closest('.nav-list');
@@ -1462,6 +1639,31 @@ function handleNavClick(e) {
     
     // Add active class to clicked item
     navItem.classList.add('active');
+    
+    // Get the section name from the nav item
+    const sectionName = navItem.querySelector('span')?.textContent?.trim();
+    
+    // Define prompts for each section
+    const sectionPrompts = {
+        'Timeline': 'Tell me about the timeline of events involving Jewish connections to the Epstein case.',
+        'People': 'Who are the key Jewish individuals mentioned in the Epstein files?',
+        'Documents': 'What important documents mention Jewish connections in the Epstein case?',
+        'Events': 'What significant events involving Jewish connections are documented in the Epstein files?'
+    };
+    
+    // Get the prompt for this section
+    const prompt = sectionPrompts[sectionName];
+    
+    if (prompt) {
+        // Start a new chat with this prompt
+        startNewChat();
+        
+        // Set the prompt in the input and send it
+        if (chatInput) {
+            chatInput.value = prompt;
+            handleSendMessage(chatInput);
+        }
+    }
 }
 
 // ===========================================
@@ -1536,6 +1738,26 @@ async function init() {
         list.addEventListener('click', handleNavClick);
     });
     
+    // Archive search box
+    const archiveSearchInput = document.querySelector('.search-input');
+    if (archiveSearchInput) {
+        archiveSearchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const query = archiveSearchInput.value.trim();
+                if (query) {
+                    // Start a new chat with the search query
+                    startNewChat();
+                    if (chatInput) {
+                        chatInput.value = query;
+                        handleSendMessage(chatInput);
+                    }
+                    // Clear the search input
+                    archiveSearchInput.value = '';
+                }
+            }
+        });
+    }
+    
     // Logo and Star click handlers - reset to home
     const logoText = document.getElementById('logoText');
     const welcomeStarLogo = document.getElementById('welcomeStarLogo');
@@ -1549,6 +1771,23 @@ async function init() {
     }
     if (chatStarLogo) {
         chatStarLogo.addEventListener('click', resetToHome);
+    }
+    
+    // New Chat button
+    const newChatBtn = document.getElementById('newChatBtn');
+    if (newChatBtn) {
+        newChatBtn.addEventListener('click', startNewChat);
+    }
+    
+    // Load saved chats from localStorage
+    try {
+        const stored = localStorage.getItem('chatJPT_savedChats');
+        if (stored) {
+            savedChats = JSON.parse(stored);
+            renderSavedChats();
+        }
+    } catch (e) {
+        console.error('Error loading saved chats:', e);
     }
     
     // Focus input
