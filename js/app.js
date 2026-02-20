@@ -349,6 +349,7 @@ function resetToHome() {
     }
     if (toggleBtn) {
         toggleBtn.classList.add('hidden');
+        toggleBtn.classList.remove('drawer-open');
     }
     
     // Clear context drawer content
@@ -1295,10 +1296,23 @@ function handleTopicClick(e) {
  * Toggle context drawer
  */
 function toggleContextDrawer() {
-    if (contextDrawer) {
-        // Toggle hidden class for show/hide
-        contextDrawer.classList.toggle('hidden');
-        contextDrawer.classList.toggle('collapsed');
+    const drawer = document.getElementById('contextDrawer');
+    const toggleBtn = document.getElementById('toggleDrawer');
+    
+    if (drawer) {
+        const isHidden = drawer.classList.contains('hidden');
+        
+        if (isHidden) {
+            // Open drawer
+            drawer.classList.remove('hidden');
+            drawer.classList.remove('collapsed');
+            if (toggleBtn) toggleBtn.classList.add('drawer-open');
+        } else {
+            // Close drawer
+            drawer.classList.add('hidden');
+            drawer.classList.add('collapsed');
+            if (toggleBtn) toggleBtn.classList.remove('drawer-open');
+        }
     }
 }
 

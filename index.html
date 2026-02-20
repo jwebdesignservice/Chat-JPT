@@ -706,9 +706,12 @@
             </div>
         </aside>
 
-        <!-- Toggle button for context drawer (mobile/collapsed) -->
+        <!-- Toggle button for context drawer (right edge arrow) -->
         <button class="btn-toggle-drawer hidden" id="toggleDrawer" aria-label="Toggle context drawer">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="arrow-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M15 19l-7-7 7-7"/>
+            </svg>
+            <svg class="arrow-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M9 5l7 7-7 7"/>
             </svg>
         </button>
@@ -740,7 +743,7 @@
         </button>
     </div>
 
-    <script src="js/app.js?v=3"></script>
+    <script src="js/app.js?v=4"></script>
     <script>
         (function() {
             // Preloader Logic

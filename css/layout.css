@@ -390,20 +390,27 @@
 /* ===== TOGGLE DRAWER BUTTON ===== */
 .btn-toggle-drawer {
     position: fixed;
-    right: var(--space-4);
+    right: 0;
     top: 50%;
     transform: translateY(-50%);
-    width: 32px;
+    width: 24px;
     height: 48px;
     background-color: var(--color-surface);
     border: var(--border-width) solid var(--color-divider);
-    border-radius: var(--radius-md);
-    display: none;
+    border-right: none;
+    border-radius: var(--radius-md) 0 0 var(--radius-md);
+    display: flex;
     align-items: center;
     justify-content: center;
     color: var(--color-text-tertiary);
     box-shadow: var(--shadow-md);
-    z-index: calc(var(--z-drawer) - 1);
+    z-index: 201;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-toggle-drawer.hidden {
+    display: none;
 }
 
 .btn-toggle-drawer:hover {
@@ -412,12 +419,26 @@
 }
 
 .btn-toggle-drawer svg {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
 }
 
-.context-drawer.collapsed ~ .btn-toggle-drawer {
-    display: flex;
+/* Show correct arrow based on drawer state */
+.btn-toggle-drawer .arrow-close {
+    display: none;
+}
+
+.btn-toggle-drawer.drawer-open .arrow-open {
+    display: none;
+}
+
+.btn-toggle-drawer.drawer-open .arrow-close {
+    display: block;
+}
+
+/* When drawer is open, position toggle at left edge of drawer */
+.btn-toggle-drawer.drawer-open {
+    right: 320px;
 }
 
 /* ===========================================
@@ -432,14 +453,6 @@
     
     .context-drawer.collapsed {
         transform: translateX(100%);
-    }
-    
-    .btn-toggle-drawer {
-        display: flex;
-    }
-    
-    .context-drawer:not(.collapsed) ~ .btn-toggle-drawer {
-        display: none;
     }
 }
 
