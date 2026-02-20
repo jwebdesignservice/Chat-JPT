@@ -1582,9 +1582,11 @@ function updateContextDrawerFromResponse(responseText) {
             drawer.classList.add('hidden');
             if (toggleBtn) toggleBtn.classList.remove('hidden');
         } else {
-            // On desktop, auto-open the drawer
-            drawer.classList.remove('hidden');
+            // On desktop, keep drawer in current state (don't force open/close)
+            // Only show toggle button, drawer state is controlled by user
             if (toggleBtn) toggleBtn.classList.remove('hidden');
+            // If drawer was already visible, keep it visible (don't close it)
+            // If it was hidden, keep it hidden until user clicks toggle
         }
     } else {
         drawer.classList.add('hidden');

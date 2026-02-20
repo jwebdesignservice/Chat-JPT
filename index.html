@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChatJPT</title>
+    <link rel="icon" type="image/png" href="Images/david flag trans.png">
+    <link rel="apple-touch-icon" href="Images/david flag trans.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -36,7 +38,7 @@
             width: 150px;
             height: 150px;
             opacity: 0;
-            animation: preloader-spin 2s linear infinite, fade-in-star 0.8s ease forwards;
+            animation: preloader-spin 4s linear infinite, fade-in-star 0.8s ease forwards;
             transition: transform 1.5s cubic-bezier(0.2, 0, 0.2, 1), opacity 0.5s ease;
         }
         .preloader.expanding .preloader-star {
@@ -458,7 +460,7 @@
 <body>
     <!-- Preloader -->
     <div class="preloader" id="preloader">
-        <img src="Images/David Flag.png" alt="Star of David" class="preloader-star">
+        <img src="Images/david flag trans.png" alt="Star of David" class="preloader-star">
         <div class="preloader-text">Welcome To ChatJPT<span class="preloader-dots">...</span></div>
     </div>
 
@@ -469,7 +471,7 @@
         <!-- Left Sidebar - Navigation -->
         <aside class="sidebar collapsed" id="sidebar">
             <div class="sidebar-header">
-                <img src="Images/David Flag.png" alt="ChatJPT" class="sidebar-logo spinning-star" id="logoText" style="cursor: pointer; width: 32px; height: 32px;">
+                <img src="Images/david flag trans.png" alt="ChatJPT" class="sidebar-logo spinning-star" id="logoText" style="cursor: pointer; width: 32px; height: 32px;">
             </div>
             <!-- Collapse arrow on right edge -->
             <button class="btn-collapse-arrow" id="collapseSidebar" aria-label="Collapse sidebar">
@@ -555,7 +557,7 @@
                     <div class="welcome-content">
                         <!-- Logo Icon -->
                         <div class="welcome-logo">
-                            <img src="Images/David Flag.png" alt="Star of David" class="spinning-star" id="welcomeStarLogo" style="width: 80px; height: 80px; object-fit: contain; cursor: pointer;">
+                            <img src="Images/david flag trans.png" alt="Star of David" class="spinning-star" id="welcomeStarLogo" style="width: 80px; height: 80px; object-fit: contain; cursor: pointer;">
                         </div>
                         
                         <!-- Heading -->
@@ -637,7 +639,7 @@
                 <div class="chat-messages hidden" id="chatMessages">
                     <!-- Spinning star header for chat -->
                     <div class="chat-header-logo">
-                        <img src="Images/David Flag.png" alt="Star of David" class="spinning-star" id="chatStarLogo" style="cursor: pointer;">
+                        <img src="Images/david flag trans.png" alt="Star of David" class="spinning-star" id="chatStarLogo" style="cursor: pointer;">
                     </div>
                 </div>
 
@@ -738,7 +740,7 @@
         </button>
     </div>
 
-    <script src="js/app.js?v=2"></script>
+    <script src="js/app.js?v=3"></script>
     <script>
         (function() {
             // Preloader Logic
