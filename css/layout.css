@@ -436,9 +436,9 @@
     display: block;
 }
 
-/* When drawer is open, position toggle at left edge of drawer */
+/* When drawer is open, position toggle at left edge of drawer - protruding from drawer */
 .btn-toggle-drawer.drawer-open {
-    right: 320px;
+    right: var(--drawer-width);
 }
 
 /* ===========================================
